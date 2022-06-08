@@ -1,0 +1,1 @@
+import 'package:equatable/equatable.dart';class ParamsMap extends Equatable{  Map<String, Object>? mapData;  int ?type;  ParamsMap({this.mapData,this.type});  @override  // TODO: implement props  List<Object?> get props => [ParamsMap,type];}

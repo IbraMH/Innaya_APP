@@ -4,9 +4,11 @@ import 'package:get/get.dart';
 import 'package:innaya_app/core/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:innaya_app/core/app_size.dart';
+import 'package:innaya_app/features/feature_auth/presntation/view/view_login.dart';
 import 'package:innaya_app/features/feature_splash/presntation/widget/item_card.dart';
 import 'package:innaya_app/features/feature_splash/presntation/widget/item_image_splash.dart';
 import 'package:innaya_app/features/feature_start/presntation/view/start_page.dart';
+import 'package:innaya_app/utility/size_config.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -21,6 +23,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+
     return SafeArea(
       child: Scaffold(
         // backgroundColor: BGroundStartPage,
@@ -79,7 +83,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 setState(() {
                   typeGender = 1;
                 });
-                Get.to(StartPage(typeGender: typeGender,));
+                Get.to(() => ViewLogin(typeGender: typeGender,),
+                    transition: Transition.rightToLeftWithFade);
               },
             ),
             ItemImageSplash(image: 'assets/images/logo_men.png',bottomPositioned: 60.h,leftPositioned: 30.w,widthImage: 180.w,),
@@ -91,7 +96,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 setState(() {
                   typeGender = 2;
                 });
-                Get.to(StartPage(typeGender: typeGender,));
+                Get.to(() => ViewLogin(typeGender: typeGender,),
+                    transition: Transition.rightToLeftWithFade);
               },
             ),
           ],

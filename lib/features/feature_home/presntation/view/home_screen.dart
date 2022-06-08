@@ -18,18 +18,18 @@ import 'package:innaya_app/localization/lang/message.dart';
 import 'package:innaya_app/widget/custome_text.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomePageScreen extends StatefulWidget {
   int typeGender = 1;
 
-  HomeScreen({
+  HomePageScreen({
     required this.typeGender,
   });
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomePageScreen> createState() => _HomePageScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomePageScreenState extends State<HomePageScreen> {
   PageController? controller;
   int selectedImage = 0;
   int? indexImage;

@@ -1,0 +1,1 @@
+import 'package:dartz/dartz.dart';import 'package:innaya_app/core/error/failure.dart';import 'package:innaya_app/features/feature_auth/data/model/result_respone.dart';abstract class RepostriyVerfication {  Future<Either<Failure,ResultRespone>>verficationAccount(var Body);}

@@ -1265,7 +1265,7 @@ class _PlaceDetailsState extends State<PlaceDetails> {
               title: 'الصفحة الرئيسية',
               typeGender: widget.typeGender,
               presCard: () {
-                Get.offAll(HomeScreen(typeGender: widget.typeGender,));
+                Get.offAll(HomePageScreen(typeGender: widget.typeGender,));
               },
             ),
             SizedBox(width: 7.w),

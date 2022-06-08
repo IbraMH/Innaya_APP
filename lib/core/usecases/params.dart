@@ -1,0 +1,1 @@
+import 'package:equatable/equatable.dart';class Params extends Equatable{  var body;  String? text;  int ?type ;  int ?pageNumber ;  int ?id;  Params({this.body,this.text,this.type=1,this.pageNumber=1,this.id});  @override  // TODO: implement props  List<Object?> get props => [body,text,type,pageNumber,id];}

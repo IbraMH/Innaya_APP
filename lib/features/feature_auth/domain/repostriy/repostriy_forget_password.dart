@@ -1,0 +1,1 @@
+import 'package:dartz/dartz.dart';import 'package:innaya_app/core/error/failure.dart';import 'package:innaya_app/features/feature_auth/data/model/result_respone.dart';abstract class RepostriyVerifyForgetPassword {  Future<Either<Failure,ResultRespone>>verficationForGetPssword(var Body);}

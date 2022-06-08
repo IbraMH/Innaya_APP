@@ -83,7 +83,7 @@ class _StartPageState extends State<StartPage> {
               style:
                   ElevatedButton.styleFrom(elevation: 5, primary: Colors.white),
               onPressed: () {
-                Get.to(HomeScreen(typeGender: widget.typeGender,));
+                Get.to(HomePageScreen(typeGender: widget.typeGender,));
               },
               child: Image.asset(
                 'assets/images/btn.png',
