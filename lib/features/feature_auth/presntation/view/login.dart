@@ -55,13 +55,13 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 50.h),
+              SizedBox(height: 30.h),
               Image.asset(
                 'assets/images/title.png',
                 width: 120.w,
                 height: 40.h,
               ),
-              SizedBox(height: 50.h),
+              SizedBox(height: 20.h),
               Image.asset(
                 'assets/images/logo.png',
                 width: double.infinity,
@@ -140,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
 
-              SizedBox(height: 30.h),
+              SizedBox(height: 15.h),
               Container(
                 width: 180.w,
                 height: 50.h,
@@ -183,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 10.h),
               TextButton(
                   onPressed: () {},
                   child: CustomeText(
@@ -193,7 +193,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: Colors.grey.shade600,
                     decoration: TextDecoration.underline,
                   )),
-              // SizedBox(height: 10.h),
               TextButton(
                   onPressed: () {},
                   child: CustomeText(
@@ -228,7 +227,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 50.h),
             ],
           ),
         ),

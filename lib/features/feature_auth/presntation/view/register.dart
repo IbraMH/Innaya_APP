@@ -127,21 +127,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         //   replacement: Container(),
                         // ),),
                       ),
-                      SizedBox(height: 15.h),
+                      SizedBox(height: 12.h),
                       CustomTextFilledAuthApp(
                         lable: 'اسم المستخدم',
                         suffixIcon: 'assets/images/user.png',
                         hintText: 'اسم المستخدم',
                         textInputType: TextInputType.name,
                       ),
-                      SizedBox(height: 15.h),
+                      SizedBox(height: 12.h),
                       CustomTextFilledAuthApp(
                         lable: 'البريد الالكتروني',
                         suffixIcon: 'assets/images/email.png',
                         hintText: 'البريد الالكتروني',
                         paddingIcon: 12,
                       ),
-                      SizedBox(height: 15.h),
+                      SizedBox(height: 12.h),
                       CustomTextFilledAuthApp(
                         lable: 'رقم الموبايل',
                         suffixIcon: 'assets/images/phone.png',
@@ -149,7 +149,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         textInputType: TextInputType.phone,
                         paddingIcon: 10,
                       ),
-                      SizedBox(height: 15.h),
+                      SizedBox(height: 12.h),
                       CustomTextFilledAuthApp(
                         lable: 'كلمة المرور',
                         suffixIcon: 'assets/images/lock.png',
@@ -157,7 +157,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         textInputType: TextInputType.visiblePassword,
                         obscureText: true,
                       ),
-                      SizedBox(height: 15.h),
+                      SizedBox(height: 12.h),
                       CustomTextFilledAuthApp(
                         lable: 'تاكيد كلمة المرور',
                         suffixIcon: 'assets/images/lock.png',
@@ -165,7 +165,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         textInputType: TextInputType.visiblePassword,
                         obscureText: true,
                       ),
-                      SizedBox(height: 15.h),
+                      SizedBox(height: 12.h),
                       CustomTextFilledAuthApp(
                         lable: 'اختر سؤال التحقق',
                         suffixIcon: 'assets/images/arrowDown2.png',
@@ -173,7 +173,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         readOnly: true,
                         pressCard: () {},
                       ),
-                      SizedBox(height: 15.h),
+                      SizedBox(height: 12.h),
                       CustomTextFilledAuthApp(
                         lable: 'اجابة سؤال التحقق',
                         suffixIcon: 'assets/images/answer.png',
@@ -181,7 +181,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         textInputType: TextInputType.text,
                         paddingIcon: 12,
                       ),
-                      SizedBox(height: 15.h),
+                      SizedBox(height: 12.h),
                       Row(
                         children: [
                           SizedBox(
@@ -217,7 +217,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 15.h),
+                      SizedBox(height: 12.h),
                       Container(
                         width: 180.w,
                         height: 50.h,
