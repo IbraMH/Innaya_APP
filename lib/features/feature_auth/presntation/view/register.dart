@@ -230,7 +230,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             colors: [
                               Color(0xffE994BE),
                               Color(0xffF6E5EF),
-                              Color(0xffF6E5EF),
                               Color(0xffE994BE),
                             ],
                           ),

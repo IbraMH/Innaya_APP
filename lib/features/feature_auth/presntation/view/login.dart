@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 30.w,
                           height: 30.h,
                           child: Checkbox(
-                            value: false,
+                            value: onChange,
                             onChanged: (value) {
                               setState(() {
                                 if(onChange==false){
@@ -153,7 +153,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     colors: [
                       Color(0xffE994BE),
                       Color(0xffF6E5EF),
-                      Color(0xffF6E5EF),
                       Color(0xffE994BE),
                     ],
                   ),
@@ -176,11 +175,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(15.w),
                       )),
                   onPressed: () {},
-                  child: CustomeText(
-                    title: 'دخول',
-                    fontSize: 24.sp,
+                  child: Image.asset(
+                    'assets/images/btn.png',
+                    width: 80.w,
+                    height: 40.h,
                     color: titleStartPage,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
