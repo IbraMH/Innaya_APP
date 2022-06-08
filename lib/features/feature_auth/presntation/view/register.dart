@@ -225,9 +225,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15.w),
                           gradient: LinearGradient(
-                            begin: Alignment.center,
-                            end: Alignment.centerLeft,
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
                             colors: [
+                              Color(0xffE994BE),
+                              Color(0xffF6E5EF),
                               Color(0xffF6E5EF),
                               Color(0xffE994BE),
                             ],
