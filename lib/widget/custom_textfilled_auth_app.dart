@@ -21,6 +21,8 @@ class CustomTextFilledAuthApp extends StatelessWidget {
    double paddingIcon;
    bool readOnly;
    GestureTapCallback? pressCard;
+   double widthTextField;
+   double heightTextField;
 
 
    CustomTextFilledAuthApp({
@@ -39,6 +41,8 @@ class CustomTextFilledAuthApp extends StatelessWidget {
      this.paddingIcon = 15,
      this.readOnly = false,
      this.pressCard,
+     this.heightTextField = 50,
+     this.widthTextField = 280,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -47,6 +51,7 @@ class CustomTextFilledAuthApp extends StatelessWidget {
       designSize: Size(SCREEN_WIDTH, SCREEN_HIGHT),
     );
     return Container(
+      // height: 50.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.w),
         gradient: LinearGradient(
@@ -70,49 +75,53 @@ class CustomTextFilledAuthApp extends StatelessWidget {
           SizedBox(height: 10,),*/
           GestureDetector(
             onTap: pressCard,
-            child: TextFormField(
-            controller: controller,
-            onChanged: onChanged,
-              focusNode: focusNode,
-              readOnly: readOnly,
-              // textInputAction:(type==null)?TextInputAction.next:TextInputAction.done ,
+            child: SizedBox(
+              height: heightTextField.h,
+              width: widthTextField.w,
+              child: TextFormField(
+              controller: controller,
+              onChanged: onChanged,
+                focusNode: focusNode,
+                readOnly: readOnly,
+                // textInputAction:(type==null)?TextInputAction.next:TextInputAction.done ,
 
-              keyboardType: textInputType,
-            obscureText: obscureText,
-            validator: validator,
-              style:  TextStyle(color: Colors.black,
-                  fontFamily: fontFamily??FONT_APP,
-                  fontSize: fontSize15.sp),
+                keyboardType: textInputType,
+              obscureText: obscureText,
+              validator: validator,
+                style:  TextStyle(color: Colors.black,
+                    fontFamily: fontFamily??FONT_APP,
+                    fontSize: fontSize15.sp),
 
-              cursorColor: kColorButtom,
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.transparent,
-              labelText: lable!,
+                cursorColor: kColorButtom,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.transparent,
+                labelText: lable!,
 
-              hintStyle:  TextStyle(      color: Colors.grey[300],fontFamily:  fontFamily??FONT_APP,fontSize: fontSize15.sp,),
-              labelStyle:  TextStyle(      color: kUnSelectTabColor,fontFamily:  fontFamily??FONT_APP,fontSize: fontSize15.sp,),
+                hintStyle:  TextStyle(      color: Colors.grey[300],fontFamily:  fontFamily??FONT_APP,fontSize: fontSize15.sp,),
+                labelStyle:  TextStyle(      color: kUnSelectTabColor,fontFamily:  fontFamily??FONT_APP,fontSize: fontSize15.sp,),
 
-              prefixIcon: Padding(
-                  padding: EdgeInsets.only(right: paddingIcon.w, left: paddingIcon.w),
-                  child: Image.asset(suffixIcon!,width: 20.w,height: 20.h,)//SvgPicture.asset(ICON_SEARCH,color: Colors.white,),
-              ),
-            hintText: hintText!,
-            // border: OutlineInputBorder(
-            //     borderRadius: BorderRadius.circular(10.w),
-            //     borderSide: BorderSide(width: 0.5,color: kSearchFiledColor)
-            // ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.w),
-                borderSide: BorderSide(width: 0.5,color: kSearchFiledColor)
-              ),
-              focusedBorder: OutlineInputBorder(
+                prefixIcon: Padding(
+                    padding: EdgeInsets.only(right: paddingIcon.w, left: paddingIcon.w),
+                    child: Image.asset(suffixIcon!,width: 20.w,height: 20.h,)//SvgPicture.asset(ICON_SEARCH,color: Colors.white,),
+                ),
+              hintText: hintText!,
+              // border: OutlineInputBorder(
+              //     borderRadius: BorderRadius.circular(10.w),
+              //     borderSide: BorderSide(width: 0.5,color: kSearchFiledColor)
+              // ),
+                enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.w),
-                  borderSide: BorderSide(width: 0.5,color: kSearchFiledColor),
+                  borderSide: BorderSide(width: 0.5,color: kSearchFiledColor)
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.w),
+                    borderSide: BorderSide(width: 0.5,color: kSearchFiledColor),
+                ),
+
               ),
 
-            ),
-
+              ),
             ),
           ),
         ],

@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:innaya_app/core/app_size.dart';
 import 'package:innaya_app/widget/custom_textfilled_auth_app.dart';
 import 'package:innaya_app/widget/custome_text.dart';
 
-
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
 
@@ -18,10 +16,10 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-
   late ImagePicker _imagePicker;
   XFile? _pickedFile;
   bool isLoading = false;
+  bool onChange = false;
 
   @override
   void initState() {
@@ -42,11 +40,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
         body: Column(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 15.h,horizontal: 20.w),
+              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset('assets/images/logo_home.png',width: 90.w,height: 90.h,),
+                  Image.asset(
+                    'assets/images/logo_home.png',
+                    width: 90.w,
+                    height: 90.h,
+                  ),
                 ],
               ),
             ),
@@ -67,9 +69,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onTap: () async {
                           await pickImage1();
                         },
-                        child:SizedBox(
-                          width: 130.w,
-                          height: 80.h,
+                        child: SizedBox(
+                          width: 70.w,
+                          height: 60.h,
                           child: Container(
                             clipBehavior: Clip.antiAlias,
                             decoration: BoxDecoration(
@@ -78,44 +80,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 color: Colors.grey,
                               ),
                               borderRadius: BorderRadius.circular(10.r),
-                              gradient: LinearGradient(
-                                  colors: [Color(0xffF4EAF3),Color(0xffFEFEFE)],
-                                  stops: [0.0, 1.0],
-                                  tileMode: TileMode.clamp),
+                              gradient: LinearGradient(colors: [
+                                Color(0xffF4EAF3),
+                                Color(0xffFEFEFE)
+                              ], stops: [
+                                0.0,
+                                1.0
+                              ], tileMode: TileMode.clamp),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.grey.withOpacity(0.2),
                                   spreadRadius: 2,
                                   blurRadius: 5,
-                                  offset: Offset(0, 0), // changes position of shadow
+                                  offset: Offset(
+                                      0, 0), // changes position of shadow
                                 ),
                               ],
                             ),
                             child: _pickedFile != null
                                 ? Center(
-                                child: Image.file(
-                                  File(_pickedFile!.path),
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  fit: BoxFit.cover,
-                                  isAntiAlias: true,
-                                )):Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 50.w,
-                                  child: CustomeText(
-                                    title: 'اضافة صورة',
-                                    fontSize: 18.sp,
-                                    // fontWeight: FontWeight.bold,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                SizedBox(width: 5.w),
-                                Image.asset('assets/images/addImage.png',width: 45.w,height: 45.h,),
-                              ],
-                            ),
+                                    child: Image.file(
+                                    File(_pickedFile!.path),
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    fit: BoxFit.cover,
+                                    isAntiAlias: true,
+                                  ))
+                                : Center(
+                                    child: Image.asset(
+                                    'assets/images/addImage.png',
+                                    width: 45.w,
+                                    height: 45.h,
+                                  )),
                           ),
                         ),
                         // Center(child: Visibility(
@@ -130,9 +126,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         //   ),
                         //   replacement: Container(),
                         // ),),
-
                       ),
-                      SizedBox(height: 10.h),
+                      SizedBox(height: 15.h),
                       CustomTextFilledAuthApp(
                         lable: 'اسم المستخدم',
                         suffixIcon: 'assets/images/user.png',
@@ -146,7 +141,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: 'البريد الالكتروني',
                         paddingIcon: 12,
                       ),
-                      SizedBox(height: 10.h),
+                      SizedBox(height: 15.h),
                       CustomTextFilledAuthApp(
                         lable: 'رقم الموبايل',
                         suffixIcon: 'assets/images/phone.png',
@@ -154,7 +149,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         textInputType: TextInputType.phone,
                         paddingIcon: 10,
                       ),
-                      SizedBox(height: 10.h),
+                      SizedBox(height: 15.h),
                       CustomTextFilledAuthApp(
                         lable: 'كلمة المرور',
                         suffixIcon: 'assets/images/lock.png',
@@ -162,7 +157,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         textInputType: TextInputType.visiblePassword,
                         obscureText: true,
                       ),
-                      SizedBox(height: 10.h),
+                      SizedBox(height: 15.h),
                       CustomTextFilledAuthApp(
                         lable: 'تاكيد كلمة المرور',
                         suffixIcon: 'assets/images/lock.png',
@@ -170,15 +165,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         textInputType: TextInputType.visiblePassword,
                         obscureText: true,
                       ),
-                      SizedBox(height: 10.h),
+                      SizedBox(height: 15.h),
                       CustomTextFilledAuthApp(
                         lable: 'اختر سؤال التحقق',
                         suffixIcon: 'assets/images/arrowDown2.png',
                         hintText: 'اختر سؤال التحقق',
                         readOnly: true,
-                        pressCard: (){},
+                        pressCard: () {},
                       ),
-                      SizedBox(height: 10.h),
+                      SizedBox(height: 15.h),
                       CustomTextFilledAuthApp(
                         lable: 'اجابة سؤال التحقق',
                         suffixIcon: 'assets/images/answer.png',
@@ -189,14 +184,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SizedBox(height: 15.h),
                       Row(
                         children: [
-                          SizedBox(width: 30.w,height: 30.h,child: Checkbox(value: false, onChanged: (value){},)),
+                          SizedBox(
+                            width: 30.w,
+                            height: 30.h,
+                            child: Checkbox(
+                              value: onChange,
+                              onChanged: (value) {
+                                setState(() {
+                                  if(onChange==false){
+                                    onChange = true;
+                                  }else{
+                                    onChange = false;
+                                  }
+                                });
+                              },
+                            ),
+                          ),
                           SizedBox(width: 10.w),
                           Expanded(
                             child: Container(
                               width: double.infinity,
                               alignment: Alignment.bottomLeft,
                               child: CustomeText(
-                                title: 'اوافق على الشروط والاحكام الخاصة بالتطبيق واقر بأنني قرأتها و استوعبتها',
+                                title:
+                                    'اوافق على الشروط والاحكام الخاصة بالتطبيق واقر بأنني قرأتها و استوعبتها',
                                 fontSize: 16.sp,
                                 color: Colors.grey,
                                 fontWeight: FontWeight.bold,
@@ -206,41 +217,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 10.h),
+                      SizedBox(height: 15.h),
                       Container(
                         width: 180.w,
                         height: 50.h,
                         clipBehavior: Clip.antiAlias,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25.w),
-                            gradient: LinearGradient(
-                              begin: Alignment.center,
-                              end: Alignment.centerLeft,
-                              colors: [
-                                Color(0xffF6E5EF),
-                                Color(0xffE994BE),
-                              ],
-                            ),
+                          borderRadius: BorderRadius.circular(15.w),
+                          gradient: LinearGradient(
+                            begin: Alignment.center,
+                            end: Alignment.centerLeft,
+                            colors: [
+                              Color(0xffF6E5EF),
+                              Color(0xffE994BE),
+                            ],
+                          ),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.3),
                               spreadRadius: 2,
                               blurRadius: 5,
-                              offset: Offset(0, 0), // changes position of shadow
+                              offset:
+                                  Offset(0, 0), // changes position of shadow
                             ),
                           ],
                         ),
                         child: ElevatedButton(
                           clipBehavior: Clip.antiAlias,
                           style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                              primary:Colors.transparent,
+                              elevation: 0,
+                              primary: Colors.transparent,
                               minimumSize: Size(180.w, 50.h),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.w),
                               )),
-                          onPressed: () {
-                          },
+                          onPressed: () {},
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
@@ -274,14 +285,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-
-  Future<void> pickImage1() async{
+  Future<void> pickImage1() async {
     _pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
-      if(_pickedFile == null){
+      if (_pickedFile == null) {
         print('false');
       }
     });
   }
-
 }
