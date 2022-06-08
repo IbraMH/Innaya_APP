@@ -221,6 +221,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 Color(0xffE994BE),
                               ],
                             ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 0), // changes position of shadow
+                            ),
+                          ],
                         ),
                         child: ElevatedButton(
                           clipBehavior: Clip.antiAlias,
