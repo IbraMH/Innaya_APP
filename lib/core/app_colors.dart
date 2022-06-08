@@ -13,4 +13,8 @@ const BGroundTextFilledColor = Color(0xFFFAD7F8);
 const BGroundTextFilledColorMen = Color(0xFFB7B7B7);
 const BGroundTitleColor = Color(0xFFCF4FCD);
 const BGroundContainerCheck = Color(0xFFFE7E00);
+const kColorButtom = Color(0xFFf4f1f2);
+const kSearchFiledColor = Color(0xFFEFEFEF);
+const kSelectTabColor = Color(0xFF141321);
+const kUnSelectTabColor = Color(0xFFC4C4C4);
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:innaya_app/features/feature_auth/presntation/view/register.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/view/place_details.dart';
 import 'package:innaya_app/features/feature_splash/presntation/view/splash_screen.dart';
 import 'package:innaya_app/features/feature_start/presntation/view/start_page.dart';
@@ -27,7 +28,7 @@ class _MainAppState extends State<MainApp> {
         enableLog: true,
         getPages: AppPages.routes,
         initialRoute: AppPages.INITIAL,
-        home: SplashScreen(),
+        home: RegisterScreen(),
         // theme: theme(),
         title: 'Offer App',
         translations: Messages(),
