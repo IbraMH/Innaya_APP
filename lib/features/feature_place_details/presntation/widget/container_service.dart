@@ -299,10 +299,9 @@ class ContainerService extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsetsDirectional.only(
-          bottom: 20.h, start: 10.w, end: 10.w, top: 15.h),
+          bottom: 10.h, start: 10.w, end: 10.w,top: 5.h),
       child: Container(
         width: double.infinity,
-        height: 240.h,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15.r),
@@ -382,14 +381,11 @@ class ContainerService extends StatelessWidget {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15.r),
-                            gradient: LinearGradient(
-                                colors: [typeGender==1?Color(0xff6D096D):Color(0xff1A1A1A),typeGender==1?Color(0xffFAC5DC):Color(0xffCCCCCC)],
-                                stops: [0.0, 1.0],
-                                tileMode: TileMode.clamp),
+                            color: typeGender==1?BGroundCategoryHomePage:BGroundCategoryHomePageMen,
                           ),
                           child: CustomeText(
                             title: 'احجز الان',
-                            color: Colors.white,
+                            color: typeGender==1?titleStartPage:titleStartPage2,
                             fontSize: 12.sp,
                           ),
                         ),
@@ -399,10 +395,10 @@ class ContainerService extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 30.h),
+            SizedBox(height: 10.h),
             // ItemColumnImageDetails(),
             SizedBox(
-              height: 130.h,
+              height: 140.h,
               child: ListView.builder(
                 itemCount: page == 1
                     ? listDataImageDetails1.length

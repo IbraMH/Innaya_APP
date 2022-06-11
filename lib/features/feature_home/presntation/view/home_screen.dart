@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:innaya_app/core/app_size.dart';
 import 'package:innaya_app/features/feature_home/presntation/widget/card_categories_home.dart';
 import 'package:innaya_app/features/feature_home/presntation/widget/card_closest.dart';
+import 'package:innaya_app/features/feature_my_reservation/presntation/view/my_reservation.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/widget/card_top_rated.dart';
 import 'package:innaya_app/features/feature_home/presntation/widget/categories_data.dart';
 import 'package:innaya_app/features/feature_home/presntation/widget/closest_data.dart';
@@ -15,6 +16,7 @@ import 'package:innaya_app/features/feature_home/presntation/widget/item_row_typ
 import 'package:innaya_app/features/feature_place_details/presntation/widget/top_rated_data.dart';
 import 'package:innaya_app/features/feature_places/presntation/view/places_screen.dart';
 import 'package:innaya_app/localization/lang/message.dart';
+import 'package:innaya_app/widget/custom_app_bar.dart';
 import 'package:innaya_app/widget/custome_text.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -143,38 +145,14 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/images/menu.png',
-                    width: 25.w,
-                    height: 25.h,
-                    color: widget.typeGender == 1
-                        ? titleStartPage
-                        : titleStartPage2,
-                  ),
-                  Spacer(),
-                  Image.asset(
-                    widget.typeGender == 1
-                        ? 'assets/images/logo_home.png'
-                        : 'assets/images/logo_home_men.png',
-                    width: 70.w,
-                    height: 70.h,
-                  ),
-                  Spacer(),
-                  Image.asset(
-                    'assets/images/search.png',
-                    width: 25.w,
-                    height: 25.h,
-                    color: widget.typeGender == 1
-                        ? titleStartPage
-                        : titleStartPage2,
-                  ),
-                ],
-              ),
+            CustomAppBar(
+              typeGender: widget.typeGender,
+              pressCard: (){
+                Get.back();
+              },
+              pressMenu: (){
+                Get.to(MyReservation(typeGender: widget.typeGender,));
+              },
             ),
             SizedBox(
               height: SCREEN_HIGHT * 0.8,
@@ -282,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     if (indexContainer != 1) {
                                       indexContainer = 1;
                                       indexImage = null;
-                                      selectedImage=0;
+                                      selectedImage = 0;
                                     }
                                   });
                                 },
@@ -297,7 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     if (indexContainer != 2) {
                                       indexContainer = 2;
                                       indexImage = null;
-                                      selectedImage=0;
+                                      selectedImage = 0;
                                     }
                                   });
                                 },
@@ -312,7 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     if (indexContainer != 3) {
                                       indexContainer = 3;
                                       indexImage = null;
-                                      selectedImage=0;
+                                      selectedImage = 0;
                                     }
                                   });
                                 },

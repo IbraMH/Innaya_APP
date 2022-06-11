@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:innaya_app/core/app_font.dart';
 import 'package:innaya_app/features/feature_auth/presntation/view/register.dart';
 import 'package:innaya_app/features/feature_home/presntation/view/home_screen.dart';
+import 'package:innaya_app/features/feature_splash/presntation/view/splash_screen.dart';
 import 'package:innaya_app/widget/custom_textfilled_auth_app.dart';
 import 'package:innaya_app/widget/custome_text.dart';
 
@@ -174,7 +175,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.w),
                       )),
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(SplashScreen());
+                  },
                   child: Image.asset(
                     'assets/images/btn.png',
                     width: 80.w,

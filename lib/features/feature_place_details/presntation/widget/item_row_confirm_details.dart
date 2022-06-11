@@ -29,7 +29,7 @@ class ItemRowConfirmDetails extends StatelessWidget {
                   image!,
                   width: 25.w,
                   height: 25.h,
-            color: typeGender==1?BGroundTitleColor:titleStartPage2,
+            color: typeGender==1?titleStartPage:titleStartPage2,
                 )
               : CustomeText(
                   title: title,

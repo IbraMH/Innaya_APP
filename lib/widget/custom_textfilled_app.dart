@@ -72,7 +72,7 @@ class CustomTextFilledApp extends StatelessWidget {
 
               decoration: InputDecoration(
                 filled: true,
-                fillColor: typeGender==1?BGroundTextFilledColor:BGroundTextFilledColorMen,
+                fillColor: typeGender==1?BGDate:BGDateMen,
 
                 hintStyle: TextStyle(
                     color: typeGender==1?Colors.grey[400]:Colors.white,

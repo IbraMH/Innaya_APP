@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:innaya_app/core/app_colors.dart';
 import 'package:innaya_app/widget/custome_text.dart';
 
 class ContainerBtnConfirm extends StatelessWidget {
@@ -24,14 +25,11 @@ class ContainerBtnConfirm extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25.r),
-          gradient: LinearGradient(
-              colors: [typeGender==1?Color(0xff6D096D):Color(0xff1A1A1A),typeGender==1?Color(0xffFAC5DC):Color(0xffCCCCCC)],
-              stops: [0.0, 1.0],
-              tileMode: TileMode.clamp),
+          color: typeGender==1?BGroundCategoryHomePage:BGroundCategoryHomePageMen,
         ),
         child: CustomeText(
           title: title,
-          color: Colors.white,
+          color: typeGender==1?titleStartPage:titleStartPage2,
           fontSize: 18.sp,
         ),
       ),

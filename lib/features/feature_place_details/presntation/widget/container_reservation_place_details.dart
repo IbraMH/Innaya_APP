@@ -2,23 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:innaya_app/core/app_colors.dart';
 import 'package:innaya_app/features/feature_my_reservation/presntation/widget/item_row_res.dart';
+import 'package:innaya_app/features/feature_place_details/presntation/widget/item_row_confirm_details.dart';
+import 'package:innaya_app/features/feature_place_details/presntation/widget/item_row_res.dart';
 import 'package:innaya_app/widget/custome_text.dart';
 
-class ContainerReservation extends StatelessWidget {
+class ContainerReservationPlaceDetails extends StatelessWidget {
   int typeGender;
   String date;
   String time;
-  String title;
-  String subTitle;
-  String image;
 
-  ContainerReservation({
+  // String title;
+  // String subTitle;
+  // String image;
+
+  ContainerReservationPlaceDetails({
     this.typeGender = 1,
     required this.date,
     required this.time,
-    required this.title,
-    required this.subTitle,
-    required this.image,
+    // required this.title,
+    // required this.subTitle,
+    // required this.image,
   });
 
   @override
@@ -80,71 +83,36 @@ class ContainerReservation extends StatelessWidget {
                   SizedBox(height: 10.h),
                   Row(
                     children: [
-                      SizedBox(width: 10.w),
-                      Container(
-                        width: 40.w,
-                        height: 40.h,
-                        clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30.r),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset:
-                                  Offset(0, 0), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        child: Image.asset(
-                          image,
-                          width: 50.w,
-                          height: 50.h,
-                          isAntiAlias: true,
-                          fit: BoxFit.cover,
-                        ),
+                      SizedBox(width: 5.w),
+                      ItemRowReservation(
+                        select: true,
+                        typeGender: typeGender,
+                        image: 'assets/images/service.png',
+                        subTitle: 'قص شعر',
                       ),
-                      SizedBox(width: 15.w),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              // mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                  child: CustomeText(
-                                    title: title,
-                                    fontSize: 12.sp,
-                                    color: typeGender == 1
-                                        ? BGTextDate
-                                        : BGTextDateMen,
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                                ),
-                                Image.asset(
-                                  'assets/images/goRe.png',
-                                  width: 15.w,
-                                  height: 15.h,
-                                  color: typeGender == 1
-                                      ? BGTextDate
-                                      : BGTextDateMen,
-                                ),
-                                SizedBox(width: 10.w),
-                              ],
-                            ),
-                            SizedBox(height: 5.h),
-                            CustomeText(
-                              title: subTitle,
-                              color: Colors.grey,
-                              fontSize: 12.sp,
-                            ),
-                          ],
-                        ),
+                      ItemRowReservation(
+                        select: true,
+                        typeGender: typeGender,
+                        image: 'assets/images/calendar.png',
+                        subTitle: '300 ر.س',
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10.h),
+                  Row(
+                    children: [
+                      SizedBox(width: 5.w),
+                      ItemRowReservation(
+                        typeGender: typeGender,
+                        title: 'الاربعاء',
+                        // image: 'assets/images/service.png',
+                        subTitle: '13:00 - 14:00',
+                      ),
+                      ItemRowReservation(
+                        select: true,
+                        typeGender: typeGender,
+                        image: 'assets/images/cardPayment.png',
+                        subTitle: '22 / 5 / 2022',
                       ),
                     ],
                   ),
@@ -167,9 +135,10 @@ class ContainerReservation extends StatelessWidget {
                           typeGender: typeGender,
                         ),
                         ItemRowRes(
-                            image: 'assets/images/cancel.png',
-                            title: 'الغاء الحجز',
-                          typeGender: typeGender,),
+                          image: 'assets/images/cancel.png',
+                          title: 'الغاء الحجز',
+                          typeGender: typeGender,
+                        ),
                       ],
                     ),
                   ),

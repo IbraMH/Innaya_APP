@@ -1,11 +1,11 @@
-class DataMyReservation {
+class DataMyReservationPlaceDetails {
   String date;
   String time;
   String image;
   String title;
   String subTitle;
 
-  DataMyReservation({
+  DataMyReservationPlaceDetails({
     required this.date,
     required this.time,
     required this.image,

@@ -26,7 +26,7 @@ class ContainerBtn extends StatelessWidget {
         width: 110.w,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: typeGender==1?BGroundCategoryHomePage:BGroundCategoryHomePageMen,
           borderRadius: BorderRadius.circular(25.r),
           boxShadow: [
             BoxShadow(
@@ -45,7 +45,7 @@ class ContainerBtn extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(image,
-                width: 17.w, height: 17.h, color: typeGender==1?BGroundTitleColor:BGroundTextColorMen),
+                width: 17.w, height: 17.h, color: typeGender==1?titleStartPage:titleStartPage2),
             SizedBox(width: 10.w),
             CustomeText(
               title: title,

@@ -5,11 +5,13 @@ import 'package:get/get.dart';
 import 'package:innaya_app/core/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:innaya_app/features/feature_home/presntation/widget/container_type_categories.dart';
+import 'package:innaya_app/features/feature_my_reservation/presntation/view/my_reservation.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/view/place_details.dart';
 import 'package:innaya_app/features/feature_places/presntation/widget/card_categories_place.dart';
 import 'package:innaya_app/features/feature_places/presntation/widget/categories_data_place.dart';
 import 'package:innaya_app/features/feature_places/presntation/widget/container_place_screen.dart';
 import 'package:innaya_app/features/feature_places/presntation/widget/place_data.dart';
+import 'package:innaya_app/widget/custom_app_bar.dart';
 import 'package:innaya_app/widget/custome_text.dart';
 import 'package:innaya_app/widget/text_filed_search.dart';
 
@@ -160,32 +162,12 @@ class _PalcesScreenState extends State<PlacesScreen> {
         backgroundColor: BGroundStartPage,
         body: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/images/menu.png',
-                    width: 25.w,
-                    height: 25.h,
-                    color: titleStartPage,
-                  ),
-                  Spacer(),
-                  Image.asset(
-                    'assets/images/logo_home.png',
-                    width: 70.w,
-                    height: 70.h,
-                  ),
-                  Spacer(),
-                  Image.asset(
-                    'assets/images/search.png',
-                    width: 25.w,
-                    height: 25.h,
-                    color: titleStartPage,
-                  ),
-                ],
-              ),
+            CustomAppBar(typeGender: widget.typeGender,pressCard: (){
+              Get.back();
+            },
+              pressMenu: (){
+                Get.to(MyReservation(typeGender: widget.typeGender,));
+              },
             ),
             Expanded(
               child: Padding(
@@ -377,3 +359,5 @@ class _PalcesScreenState extends State<PlacesScreen> {
     );
   }
 }
+
+
