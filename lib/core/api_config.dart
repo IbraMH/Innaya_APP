@@ -1,7 +1,7 @@
 import 'package:innaya_app/core/PreferenceUtils.dart';
 import 'package:innaya_app/utility/utility.dart';
 
-const String mainUrl = "http://carrentaltripleq.link";
+const String mainUrl = "http://salons.link";
 const String apiUrl = "$mainUrl/api/v1/";
 const bool enableFaker = true;
 
@@ -14,6 +14,7 @@ Map<String, String> Header(int typeToken) {
       'Content-Type': 'application/json',
       'X-localization': 'ar',
       'device-id': Utility.deviceId,
+      'gender': "${Utility.typeGender}",
       'Authorization': 'Bearer ${PreferenceUtils.getToken()}',
 
       // 'city-id':"${(PreferenceUtils.getCityState()==null)?"":PreferenceUtils.getCityState()!.id}",
@@ -21,6 +22,7 @@ Map<String, String> Header(int typeToken) {
   } else if (typeToken == 1) {
     headers = {
       'Content-Type': 'application/json',
+      'gender': "${Utility.typeGender}",
       'Authorization': 'Bearer ${PreferenceUtils.getToken()}',
       'X-localization': 'ar',
       'Charset': 'utf-8',
@@ -31,6 +33,7 @@ Map<String, String> Header(int typeToken) {
     headers = {
       'Content-Type': 'application/json',
       'X-localization': 'ar',
+      'gender': "${Utility.typeGender}",
       'Authorization': 'Bearer ${PreferenceUtils.getToken()}',
       // 'city-id':"${(PreferenceUtils.getCityState()==null)?"":PreferenceUtils.getCityState()!.id}",
     };
@@ -40,6 +43,7 @@ Map<String, String> Header(int typeToken) {
       //'Authorization': 'Bearer ${PreferenceUtils.getToken()}',
       'X-localization': 'ar',
       'device-id': Utility.deviceId,
+      'gender': "${Utility.typeGender}",
       'Content-Type': 'multipart/form-data',
       'Authorization': 'Bearer ${PreferenceUtils.getToken()}',
       // 'city-id':"${(PreferenceUtils.getCityState()==null)?"":PreferenceUtils.getCityState()!.id}",
@@ -50,19 +54,30 @@ Map<String, String> Header(int typeToken) {
   } else if (typeToken == 4) {
     headers = {
       'Authorization': 'Bearer ${PreferenceUtils.getToken()}',
+      'gender': "${Utility.typeGender}",
+
       // 'city-id':"${(PreferenceUtils.getCityState()==null)?"":PreferenceUtils.getCityState()!.id}",
     };
   }
   print("Bearer ${PreferenceUtils.getToken()}");
 
   print("Authorization");
+  print(headers);
+
   return headers;
 
 
 }
 class Api{
-  static getBrand() {
-    return "${apiUrl}customer/get/brands";
+  static getDepartments() {
+    return "${apiUrl}department/get";
+  }
+  static getFilter() {
+    return "${apiUrl}home/filter/centre";
+  }
+
+  static getSlider() {
+    return "${apiUrl}home/get/slider";
   }
   static getVehicleType() {
     return "${apiUrl}customer/get/vehicleType";

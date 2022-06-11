@@ -36,6 +36,8 @@ class CardCategoriesPlace extends StatelessWidget {
             title: title,
             color: typeGender==1?titleStartPage:titleStartPage2,
             fontSize: fontSize.sp,
+            overflow: 1,
+            maxLines: 1,
           ),
         ],
       ),

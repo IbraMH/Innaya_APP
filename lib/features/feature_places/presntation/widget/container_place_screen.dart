@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:innaya_app/core/app_colors.dart';
+import 'package:innaya_app/features/feature_home/data/model/department.dart';
 import 'package:innaya_app/features/feature_places/presntation/widget/card_categories_place.dart';
 import 'package:innaya_app/features/feature_places/presntation/widget/categories_data_place.dart';
 import 'package:innaya_app/features/feature_places/presntation/widget/container_icon.dart';
@@ -64,7 +65,7 @@ class ContainerPlaceScreen extends StatelessWidget {
   int indexContainer;
   GestureTapCallback? pressCard;
   int typeGender;
-
+  Service? service;
   ContainerPlaceScreen({
     required this.title,
     required this.image,
@@ -74,6 +75,7 @@ class ContainerPlaceScreen extends StatelessWidget {
     this.indexContainer = 1,
     this.pressCard,
     this.typeGender = 1,
+    this.service,
   });
 
   @override
@@ -136,42 +138,33 @@ class ContainerPlaceScreen extends StatelessWidget {
                 children: [
                   SizedBox(height: 5.h),
                   SizedBox(
-                    height: 35.h,
+                    height: 40.h,
                     child: ListView.builder(
                       itemCount: indexContainer == 1 && typeGender == 1
                           ? listCategory1.length
-                          : indexContainer == 1 &&
-                          typeGender == 2
-                          ? listCategoryMen1.length
-                          : indexContainer == 2 &&
-                          typeGender == 1
-                          ? listCategory2.length
-                          : indexContainer == 2 &&
-                          typeGender == 2
-                          ? listCategoryMen2.length
-                          : listCategory3.length,
+                          : indexContainer == 1 && typeGender == 2
+                              ? listCategoryMen1.length
+                              : indexContainer == 2 && typeGender == 1
+                                  ? listCategory2.length
+                                  : indexContainer == 2 && typeGender == 2
+                                      ? listCategoryMen2.length
+                                      : listCategory3.length,
                       scrollDirection: Axis.horizontal,
                       padding: EdgeInsetsDirectional.only(start: 15.sp),
                       itemBuilder: (context, index) {
                         CategoriesDataPlace listCategory =
-                        indexContainer == 1 &&
-                            typeGender == 1
-                            ? listCategory1.elementAt(index)
-                            : indexContainer == 1 &&
-                            typeGender == 2
-                            ? listCategoryMen1.elementAt(index)
-                            : indexContainer == 2 &&
-                            typeGender == 1
-                            ? listCategory2.elementAt(index)
-                            : indexContainer == 2 &&
-                            typeGender == 2
-                            ? listCategoryMen2
-                            .elementAt(index)
-                            : listCategory3
-                            .elementAt(index);
+                            indexContainer == 1 && typeGender == 1
+                                ? listCategory1.elementAt(index)
+                                : indexContainer == 1 && typeGender == 2
+                                    ? listCategoryMen1.elementAt(index)
+                                    : indexContainer == 2 && typeGender == 1
+                                        ? listCategory2.elementAt(index)
+                                        : indexContainer == 2 && typeGender == 2
+                                            ? listCategoryMen2.elementAt(index)
+                                            : listCategory3.elementAt(index);
                         return CardCategoriesPlace(
-                            image: listCategory.image,
-                            title: listCategory.title,
+                          image: listCategory.image,
+                          title: listCategory.title,
                           typeGender: typeGender,
                         );
                       },
@@ -182,13 +175,20 @@ class ContainerPlaceScreen extends StatelessWidget {
                     children: [
                       Column(
                         children: [
-                          GestureDetector(
-                            onTap: pressCard,
-                            child: CustomeText(
-                              title: title,
-                              fontSize: 12.sp,
-                              color: typeGender==1?titleStartPage:titleStartPage2,
-                              fontWeight: FontWeight.w500,
+                          SizedBox(
+                            width: 120.w,
+                            child: GestureDetector(
+                              onTap: pressCard,
+                              child: CustomeText(
+                                title: title,
+                                maxLines: 1,
+                                fontSize: 12.sp,
+                                color: typeGender == 1
+                                    ? titleStartPage
+                                    : titleStartPage2,
+                                fontWeight: FontWeight.w500,
+                                overflow: 1,
+                              ),
                             ),
                           ),
                           SizedBox(height: 10.h),
@@ -198,13 +198,21 @@ class ContainerPlaceScreen extends StatelessWidget {
                                 'assets/images/location2.png',
                                 width: 20.w,
                                 height: 20.h,
-                                color: typeGender==1?titleStartPage:titleStartPage2,
+                                color: typeGender == 1
+                                    ? titleStartPage
+                                    : titleStartPage2,
                               ),
                               SizedBox(width: 5.w),
-                              CustomeText(
-                                title: placeTitle,
-                                fontSize: 10.sp,
-                                color: Colors.grey,
+                              SizedBox(
+                                width: 120.w,
+                                child: CustomeText(
+                                  title: placeTitle,
+                                  fontSize: 10.sp,
+                                  overflow: 1,
+
+                                  maxLines: 1,
+                                  color: Colors.grey,
+                                ),
                               ),
                             ],
                           ),
@@ -221,7 +229,9 @@ class ContainerPlaceScreen extends StatelessWidget {
                                 'assets/images/chat.png',
                                 width: 30.w,
                                 height: 30.h,
-                                color: typeGender==1?titleStartPage:titleStartPage2,
+                                color: typeGender == 1
+                                    ? titleStartPage
+                                    : titleStartPage2,
                               ),
                             ),
                             Positioned(
@@ -232,7 +242,9 @@ class ContainerPlaceScreen extends StatelessWidget {
                                 height: 22.h,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                  color: typeGender==1?titleStartPage:titleStartPage2,
+                                  color: typeGender == 1
+                                      ? titleStartPage
+                                      : titleStartPage2,
                                   borderRadius: BorderRadius.circular(20.r),
                                   border: Border.all(
                                       color: Colors.white, width: 0.5),
@@ -258,10 +270,17 @@ class ContainerPlaceScreen extends StatelessWidget {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15.r),
-                          gradient: LinearGradient(
-                              colors: [typeGender==1?Color(0xff6D096D):Color(0xff1A1A1A), typeGender==1?Color(0xffFAC5DC):Color(0xffCCCCCC)],
-                              stops: [0.0, 1.0],
-                              tileMode: TileMode.clamp),
+                          gradient: LinearGradient(colors: [
+                            typeGender == 1
+                                ? Color(0xff6D096D)
+                                : Color(0xff1A1A1A),
+                            typeGender == 1
+                                ? Color(0xffFAC5DC)
+                                : Color(0xffCCCCCC)
+                          ], stops: [
+                            0.0,
+                            1.0
+                          ], tileMode: TileMode.clamp),
                         ),
                         child: CustomeText(
                           title: 'احجز الان',
@@ -272,7 +291,8 @@ class ContainerPlaceScreen extends StatelessWidget {
                       SizedBox(width: 10.w),
                       CustomeText(
                         title: '$length km',
-                        color: typeGender==1?titleStartPage:titleStartPage2,
+                        color:
+                            typeGender == 1 ? titleStartPage : titleStartPage2,
                         fontSize: 10.sp,
                         fontWeight: FontWeight.w900,
                       ),
@@ -296,7 +316,8 @@ class ContainerPlaceScreen extends StatelessWidget {
                         itemSize: 12,
                         itemBuilder: (context, _) => Icon(
                           Icons.star,
-                          color: typeGender==1?titleStartPage:Colors.amber,
+                          color:
+                              typeGender == 1 ? titleStartPage : Colors.amber,
                         ),
                         onRatingUpdate: (rating) {
                           // ProductGetxController.to.rattingProduct(
