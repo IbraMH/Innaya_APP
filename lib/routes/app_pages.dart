@@ -17,7 +17,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: Routes.SPLASH,
-      page: () => SplashScreen(),
+      page: () => LoginScreen(),
     ),
     // GetPage(
     //

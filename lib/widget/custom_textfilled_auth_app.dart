@@ -23,6 +23,7 @@ class CustomTextFilledAuthApp extends StatelessWidget {
    GestureTapCallback? pressCard;
    double widthTextField;
    double heightTextField;
+   int typeGender;
 
 
    CustomTextFilledAuthApp({
@@ -43,6 +44,7 @@ class CustomTextFilledAuthApp extends StatelessWidget {
      this.pressCard,
      this.heightTextField = 50,
      this.widthTextField = 280,
+     this.typeGender = 1,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,7 @@ class CustomTextFilledAuthApp extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.w),
         gradient: LinearGradient(
-            colors: [Color(0xffF4EAF3),Color(0xffFEFEFE)],
+            colors: [Color(0xffF6E9E5),Color(0xffFEFEFE)],
             stops: [0.0, 1.0],
             tileMode: TileMode.clamp),
         boxShadow: [
@@ -103,7 +105,7 @@ class CustomTextFilledAuthApp extends StatelessWidget {
 
                 prefixIcon: Padding(
                     padding: EdgeInsets.only(right: paddingIcon.w, left: paddingIcon.w),
-                    child: Image.asset(suffixIcon!,width: 20.w,height: 20.h,)//SvgPicture.asset(ICON_SEARCH,color: Colors.white,),
+                    child: Image.asset(suffixIcon!,width: 20.w,height: 20.h,color: typeGender==1?titleStartPage:titleStartPage2,)//SvgPicture.asset(ICON_SEARCH,color: Colors.white,),
                 ),
               hintText: hintText!,
               // border: OutlineInputBorder(

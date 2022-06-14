@@ -30,7 +30,7 @@ class _MainAppState extends State<MainApp> {
         enableLog: true,
         getPages: AppPages.routes,
         initialRoute: AppPages.INITIAL,
-        home: SplashScreen(),
+        home: LoginScreen(),
         // theme: theme(),
         title: 'Offer App',
         translations: Messages(),
