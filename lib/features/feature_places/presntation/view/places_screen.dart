@@ -13,6 +13,7 @@ import 'package:innaya_app/features/feature_places/presntation/widget/container_
 import 'package:innaya_app/features/feature_places/presntation/widget/place_data.dart';
 import 'package:innaya_app/widget/custom_app_bar.dart';
 import 'package:innaya_app/widget/custome_text.dart';
+import 'package:innaya_app/widget/navigation_drawer.dart';
 import 'package:innaya_app/widget/text_filed_search.dart';
 
 class PlacesScreen extends StatefulWidget {
@@ -148,6 +149,8 @@ class _PalcesScreenState extends State<PlacesScreen> {
         numUse: 250),
   ];
 
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -159,15 +162,15 @@ class _PalcesScreenState extends State<PlacesScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        key: _key,
         backgroundColor: BGroundStartPage,
+        drawer: NavigationDrawer(typeGender: widget.typeGender),
         body: Column(
           children: [
             CustomAppBar(typeGender: widget.typeGender,pressCard: (){
               Get.back();
             },
-              pressMenu: (){
-                Get.to(MyReservation(typeGender: widget.typeGender,));
-              },
+              pressMenu: () => _key.currentState!.openDrawer(),
             ),
             Expanded(
               child: Padding(
@@ -247,6 +250,7 @@ class _PalcesScreenState extends State<PlacesScreen> {
                                 children: [
                                   SizedBox(
                                     width: 230.w,
+                                    height: 40.h,
                                     child: TextFiledSearch(
                                       searchQuery: searchQuery!,
                                       pressClose: () {
@@ -257,7 +261,7 @@ class _PalcesScreenState extends State<PlacesScreen> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: 45.h,
+                                    height: 40.h,
                                     width: 120.w,
                                     child: Container(
                                       height: 48.h,

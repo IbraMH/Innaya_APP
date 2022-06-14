@@ -6,9 +6,13 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 import 'package:innaya_app/core/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:innaya_app/features/feature_chat/presntation/view/chat_screen.dart';
+import 'package:innaya_app/features/feature_favorite/presntation/view/favorite_screen.dart';
 import 'package:innaya_app/features/feature_home/presntation/view/home_screen.dart';
 import 'package:innaya_app/features/feature_home/presntation/widget/container_type_categories.dart';
 import 'package:innaya_app/features/feature_my_reservation/presntation/widget/data_my_reservation.dart';
+import 'package:innaya_app/features/feature_place_details/presntation/widget/alert_dialog_map.dart';
+import 'package:innaya_app/features/feature_place_details/presntation/widget/alert_dialog_stare.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/widget/card_categories_place_details.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/widget/card_top_rated.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/widget/container_btn.dart';
@@ -23,11 +27,13 @@ import 'package:innaya_app/features/feature_place_details/presntation/widget/dat
 import 'package:innaya_app/features/feature_place_details/presntation/widget/data_service_details.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/widget/divider_check.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/widget/image_details.dart';
+import 'package:innaya_app/features/feature_place_details/presntation/widget/item_column_emp_details.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/widget/item_column_image_details.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/widget/item_reservation_container.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/widget/item_row_card_note.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/widget/item_row_confirm_details.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/widget/item_row_service.dart';
+import 'package:innaya_app/features/feature_place_details/presntation/widget/persentIndicator.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/widget/text_check.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/widget/top_rated_data.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/widget/card_image_slider.dart';
@@ -37,6 +43,7 @@ import 'package:innaya_app/features/feature_places/presntation/widget/card_categ
 import 'package:innaya_app/features/feature_places/presntation/widget/categories_data_place.dart';
 import 'package:innaya_app/widget/custom_textfilled_app.dart';
 import 'package:innaya_app/widget/custome_text.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:weekly_date_picker/weekly_date_picker.dart';
 
 class PlaceDetails extends StatefulWidget {
@@ -367,11 +374,58 @@ class _PlaceDetailsState extends State<PlaceDetails> {
         subTitle: 'تدليك'),
   ];
 
+  var numRate = [100,70,130,40,7];
+  int sum = 0;
+  // double average = 0;
+  int sumNumRate(){
+    for(int i = 0; i<=numRate.length;i++){
+      sum = sum + numRate[i];
+    }
+    print('sumsum $sum');
+    return sum;
+  }
+
+  double _initialRating = 2;
+  late double _rating;
+  late final _ratingController;
+
+  Future<bool> _onWillPopStare() async {
+    return await showDialog(
+          context: context,
+          // barrierDismissible: true,
+          builder: (context) => AlertDialogStareFun(
+            typeGender: widget.typeGender,
+            notesController: notesController,
+            initialRating: _initialRating,
+            rating: _rating,
+            ratingController: _ratingController,
+          ),
+        ) ??
+        false;
+  }
+
+  Future<bool> _onWillPopMap() async {
+    return await showDialog(
+          context: context,
+          // barrierDismissible: true,
+          builder: (context) => AlertDialogMapFun(),
+        ) ??
+        false;
+  }
+
+
+
+
+
+
   @override
   void initState() {
     // TODO: implement initState
     controller = PageController();
     notesController = TextEditingController();
+    _ratingController = TextEditingController(text: '3.0');
+    _rating = _initialRating;
+    // average = numRate[0]/sumNumRate();
     super.initState();
   }
 
@@ -384,6 +438,7 @@ class _PlaceDetailsState extends State<PlaceDetails> {
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: BGroundStartPage,
@@ -424,9 +479,13 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                   Column(
                     children: [
                       ImageDetails(
-                          image: widget.typeGender == 1
-                              ? 'assets/images/chat2.png'
-                              : 'assets/images/chat_men.png'),
+                        image: widget.typeGender == 1
+                            ? 'assets/images/chat2.png'
+                            : 'assets/images/chat_men.png',
+                        onTap: () {
+                          Get.to(ChatScreen(typeGender: widget.typeGender));
+                        },
+                      ),
                       ImageDetails(
                           image: widget.typeGender == 1
                               ? 'assets/images/favorite2.png'
@@ -435,27 +494,33 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                           image: widget.typeGender == 1
                               ? 'assets/images/share2.png'
                               : 'assets/images/share_men.png'),
-                      ImageDetails(
-                          image: widget.typeGender == 1
-                              ? 'assets/images/stare.png'
-                              : 'assets/images/stare.png'),
-                      ImageDetails(
-                          image: widget.typeGender == 1
-                              ? 'assets/images/video.png'
-                              : 'assets/images/video_men.png'),
                     ],
                   ),
                   Row(
                     children: [
-                      SizedBox(width: 45.w),
+                      SizedBox(width: 55.w),
                       ImageDetails(
                           image: widget.typeGender == 1
-                              ? 'assets/images/whatsApp.png'
-                              : 'assets/images/whatsApp.png'),
+                              ? 'assets/images/whatsapp.png'
+                              : 'assets/images/whatsapp.png'),
                       ImageDetails(
                           image: widget.typeGender == 1
                               ? 'assets/images/call.png'
                               : 'assets/images/call_men.png'),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ImageDetails(
+                        onTap: () {
+                          _onWillPopStare();
+                        },
+                        image: widget.typeGender == 1
+                            ? 'assets/images/stare.png'
+                            : 'assets/images/stare.png',
+                      ),
+                      SizedBox(width: 55.w),
                     ],
                   ),
                   Column(
@@ -487,23 +552,37 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                   ),
                   Column(
                     children: [
-                      SizedBox(
-                        height: 15.h,
-                      ),
+                      // SizedBox(
+                      //   height: 55.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          GestureDetector(
-                              onTap: () {
-                                Get.back();
-                              },
-                              child: Image.asset(
-                                widget.typeGender == 1
-                                    ? 'assets/images/back.png'
-                                    : 'assets/images/back_men.png',
-                                width: 50.w,
-                                height: 50.h,
-                              )),
+                          Column(
+                            children: [
+                              GestureDetector(
+                                  onTap: () {
+                                    Get.back();
+                                  },
+                                  child: Image.asset(
+                                    widget.typeGender == 1
+                                        ? 'assets/images/back.png'
+                                        : 'assets/images/back_men.png',
+                                    width: 55.w,
+                                    height: 55.h,
+                                  )),
+                              ImageDetails(
+                                  onTap: () {
+                                    _onWillPopMap();
+                                  },
+                                  image: widget.typeGender == 1
+                                      ? 'assets/images/map.png'
+                                      : 'assets/images/map.png'),
+                              ImageDetails(
+                                  image: widget.typeGender == 1
+                                      ? 'assets/images/video.png'
+                                      : 'assets/images/video_men.png'),
+                            ],
+                          ),
                         ],
                       ),
                     ],
@@ -759,7 +838,8 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                   title: 'نبذة',
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
-                  color: widget.typeGender == 1 ? titleStartPage : titleStartPage2,
+                  color:
+                      widget.typeGender == 1 ? titleStartPage : titleStartPage2,
                 ),
               ),
               SizedBox(
@@ -767,7 +847,8 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                 child: Divider(
                   height: 40.h,
                   thickness: 2.h,
-                  color: widget.typeGender == 1 ? titleStartPage : titleStartPage2,
+                  color:
+                      widget.typeGender == 1 ? titleStartPage : titleStartPage2,
                   endIndent: 20.w,
                   indent: 70.w,
                 ),
@@ -796,7 +877,8 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                   title: 'مواعيد العمل',
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
-                  color: widget.typeGender == 1 ? titleStartPage : titleStartPage2,
+                  color:
+                      widget.typeGender == 1 ? titleStartPage : titleStartPage2,
                 ),
               ),
               SizedBox(
@@ -804,7 +886,8 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                 child: Divider(
                   height: 40.h,
                   thickness: 2.h,
-                  color: widget.typeGender == 1 ? titleStartPage : titleStartPage2,
+                  color:
+                      widget.typeGender == 1 ? titleStartPage : titleStartPage2,
                   endIndent: 32.w,
                   indent: 7.w,
                 ),
@@ -814,7 +897,7 @@ class _PlaceDetailsState extends State<PlaceDetails> {
           SizedBox(height: 10.w),
           Center(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 25.w,vertical: 10.h),
+              padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 10.h),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(5.r),
@@ -855,7 +938,8 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                   title: 'طاقم العمل',
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
-                  color: widget.typeGender == 1 ? titleStartPage : titleStartPage2,
+                  color:
+                      widget.typeGender == 1 ? titleStartPage : titleStartPage2,
                 ),
               ),
               SizedBox(
@@ -863,7 +947,8 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                 child: Divider(
                   height: 40.h,
                   thickness: 2.h,
-                  color: widget.typeGender == 1 ? titleStartPage : titleStartPage2,
+                  color:
+                      widget.typeGender == 1 ? titleStartPage : titleStartPage2,
                   endIndent: 25.w,
                   indent: 15.w,
                 ),
@@ -912,7 +997,8 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                   title: 'اراء الزبائن',
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
-                  color: widget.typeGender == 1 ? titleStartPage : titleStartPage2,
+                  color:
+                      widget.typeGender == 1 ? titleStartPage : titleStartPage2,
                 ),
               ),
               SizedBox(
@@ -920,7 +1006,8 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                 child: Divider(
                   height: 40.h,
                   thickness: 2.h,
-                  color: widget.typeGender == 1 ? titleStartPage : titleStartPage2,
+                  color:
+                      widget.typeGender == 1 ? titleStartPage : titleStartPage2,
                   endIndent: 10.w,
                   indent: 30.w,
                 ),
@@ -928,6 +1015,104 @@ class _PlaceDetailsState extends State<PlaceDetails> {
             ],
           ),
           SizedBox(height: 15.w),
+          Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.w),
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 15.w,vertical: 15.h),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 0), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Column(
+                      children: [
+                        Stack(
+                          children: [
+                            Image.asset(
+                              'assets/images/star.png',
+                              width: 100.w,
+                              height: 100.h,
+
+                            ),
+                            Positioned(
+                              left: 37.w,
+                              top: 37.h,
+                              child: CustomeText(
+                                title: '3.6',
+                                fontSize: 20.sp,
+                                textAlign: TextAlign.center,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                        CustomeText(
+                          title: 'متوسط التقييمات',
+                          fontSize: 14.sp,
+                          color: widget.typeGender==1?titleStartPage:titleStartPage2,
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                    Column(
+                      children: [
+                        PersentIndicator(leading: '5 نجوم', trailing: numRate[0].toString(), percent: numRate[0]/347),
+                        SizedBox(height: 5.h),
+                        PersentIndicator(leading: '4 نجوم', trailing: numRate[1].toString(), percent: numRate[1]/347),
+                        SizedBox(height: 5.h),
+                        PersentIndicator(leading: '3 نجوم', trailing: numRate[2].toString(), percent: numRate[2]/347),
+                        SizedBox(height: 5.h),
+                        PersentIndicator(leading: '2 نجوم', trailing: numRate[3].toString(), percent: numRate[3]/347),
+                        SizedBox(height: 5.h),
+                        PersentIndicator(leading: '1 نجوم', trailing: numRate[4].toString(), percent: numRate[4]/347),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 15.w),
+          Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.w),
+              child: Container(
+                width: double.infinity,
+                height: 400.h,
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 0), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: ListView.builder(
+                  itemCount: 3,
+                  itemBuilder: (context, index) {
+                    return ItemColumnEmpDetails();
+                  },
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 25.w),
         ],
       ),
     );
@@ -966,793 +1151,830 @@ class _PlaceDetailsState extends State<PlaceDetails> {
   }
 
   Widget reservation() {
-    return SingleChildScrollView(
+    return Column(
+      children: [
+        SizedBox(height: 15.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(width: 30.w),
+            Column(
+              children: [
+                Image.asset(
+                  selectWidgetReservation == 1
+                      ? 'assets/images/confirm1.png'
+                      : selectWidgetReservation == 2
+                          ? 'assets/images/confirm2.png'
+                          : 'assets/images/confirm3.png',
+                  width: 250.w,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextCheck(
+                      title: 'الانتهاء',
+                      typeGender: widget.typeGender,
+                    ),
+                    SizedBox(width: 75.w),
+                    TextCheck(
+                      title: 'الدفع',
+                      typeGender: widget.typeGender,
+                    ),
+                    SizedBox(width: 85.w),
+                    TextCheck(
+                      title: 'الحجز',
+                      typeGender: widget.typeGender,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(width: 20.w),
+            selectWidgetReservation == 2 || selectWidgetReservation == 3
+                ? GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (selectWidgetReservation == 3) {
+                          selectWidgetReservation = 2;
+                        } else {
+                          selectWidgetReservation = 1;
+                        }
+                      });
+                    },
+                    child: Container(
+                      width: 40.w,
+                      height: 40.h,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 0), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Image.asset(
+                          'assets/images/backAB.png',
+                          width: 25.w,
+                          height: 25.h,
+                          color: widget.typeGender == 1
+                              ? titleStartPage
+                              : titleStartPage2,
+                        ),
+                      ),
+                    ),
+                  )
+                : SizedBox(),
+          ],
+        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   crossAxisAlignment: CrossAxisAlignment.center,
+        //   children: [
+        //     ContainerCheck(),
+        //     SizedBox(width: 10.w),
+        //     DividerCheck(),
+        //     SizedBox(width: 10.w),
+        //     ContainerCheck(),
+        //     SizedBox(width: 10.w),
+        //     DividerCheck(),
+        //     SizedBox(width: 10.w),
+        //     ContainerCheck(),
+        //   ],
+        // ),
+
+        selectWidgetReservation == 1
+            ? columnReservation()
+            : selectWidgetReservation == 2
+                ? columnConfirmReservation()
+                : columnConfirm(),
+      ],
+    );
+  }
+
+  Widget columnReservation() {
+    return Expanded(
       child: Column(
         children: [
-          SizedBox(height: 15.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(width: 30.w),
-              Column(
-                children: [
-                  Image.asset(
-                    selectWidgetReservation == 1
-                        ? 'assets/images/confirm1.png'
-                        : selectWidgetReservation == 2
-                            ? 'assets/images/confirm2.png'
-                            : 'assets/images/confirm3.png',
-                    width: 250.w,
-                  ),
-                  SizedBox(height: 5.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextCheck(
-                        title: 'الانتهاء',
-                        typeGender: widget.typeGender,
-                      ),
-                      SizedBox(width: 75.w),
-                      TextCheck(
-                        title: 'الدفع',
-                        typeGender: widget.typeGender,
-                      ),
-                      SizedBox(width: 85.w),
-                      TextCheck(
-                        title: 'الحجز',
-                        typeGender: widget.typeGender,
-                      ),
-                    ],
-                  ),
-                ],
+          ItemReservationContainer(
+            title: 'نوع الخدمة',
+            image: 'assets/images/service.png',
+            typeGender: widget.typeGender,
+            heightContainer: 130,
+            widget: SizedBox(
+              height: 75.h,
+              child: ListView.builder(
+                itemCount: widget.page == 1
+                    ? listCategory1.length
+                    : widget.page == 2
+                        ? listCategory2.length
+                        : listCategory3.length,
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsetsDirectional.only(start: 15.w),
+                itemBuilder: (context, index) {
+                  CategoriesDataPlace categoryDataPlace = widget.page == 1
+                      ? listCategory1.elementAt(index)
+                      : widget.page == 2
+                          ? listCategory2.elementAt(index)
+                          : listCategory3.elementAt(index);
+                  return CardCategoriesPlaceDetails(
+                    image: categoryDataPlace.image,
+                    title: categoryDataPlace.title,
+                    sizeImage: 30,
+                    fontSize: 14,
+                    space: 5,
+                    select: selectedContainer == index ? true : false,
+                    numProduct: categoryDataPlace.numberProduct!,
+                    showWidget: categoryDataPlace.numberProduct! != 0
+                        ? isVisible
+                        : false,
+                    typeGender: widget.typeGender,
+                    pressCard: () {
+                      setState(() {
+                        if (selectedContainer != index) {
+                          selectedContainer = index;
+                          showDate = true;
+                          indexList = index;
+                        } else {
+                          selectedContainer = -1;
+                        }
+                      });
+                    },
+                  );
+                },
               ),
-              SizedBox(width: 20.w),
-              selectWidgetReservation == 2 || selectWidgetReservation == 3
-                  ? GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          if (selectWidgetReservation == 3) {
-                            selectWidgetReservation = 2;
-                          } else {
-                            selectWidgetReservation = 1;
-                          }
-                        });
-                      },
-                      child: Container(
-                        width: 40.w,
-                        height: 40.h,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10.r),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset:
-                                  Offset(0, 0), // changes position of shadow
+            ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  showDate
+                      ? ItemReservationContainer(
+                          title: 'التاريخ',
+                          image: 'assets/images/calendar.png',
+                          typeGender: widget.typeGender,
+                          heightContainer: 150,
+                          widget: SizedBox(
+                            height: 80.h,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5.w),
+                              child: WeeklyDatePicker(
+                                selectedDay: date,
+                                changeDay: (value) => setState(() {
+                                  date = value;
+                                  showTime = true;
+                                }),
+                                selectedDigitColor: widget.typeGender == 1
+                                    ? titleStartPage
+                                    : titleStartPage2,
+                                enableWeeknumberText: false,
+                                weeknumberColor: widget.typeGender == 1
+                                    ? titleStartPage
+                                    : titleStartPage2,
+                                weeknumberTextColor: widget.typeGender == 1
+                                    ? titleStartPage
+                                    : titleStartPage2,
+                                backgroundColor:
+                                    widget.typeGender == 1 ? BGDate : BGDateMen,
+                                weekdayTextColor: widget.typeGender == 1
+                                    ? BGTextDate
+                                    : BGTextDateMen,
+                                digitsColor: widget.typeGender == 1
+                                    ? BGTextDate
+                                    : BGTextDateMen,
+                                selectedBackgroundColor: Colors.white,
+                                weekdays: [
+                                  "Sun",
+                                  "Mon",
+                                  "Tue",
+                                  "Wed",
+                                  "Thu",
+                                  "Fri",
+                                  "Sat"
+                                ],
+                                daysInWeek: 7,
+                              ),
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
+                  showTime
+                      ? ItemReservationContainer(
+                          title: 'الساعة',
+                          image: 'assets/images/clock.png',
+                          typeGender: widget.typeGender,
+                          heightContainer: 200,
+                          widget: SizedBox(
+                            height: 145.h,
+                            child: GridView.builder(
+                              itemCount: listTime.length,
+                              padding: EdgeInsets.all(5.h),
+                              physics: NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      childAspectRatio: 2.8,
+                                      mainAxisSpacing: 5,
+                                      crossAxisSpacing: 5),
+                              itemBuilder: (context, index) {
+                                String time = listTime.elementAt(index);
+                                return ContainerTime(
+                                  title: time,
+                                  select: indexGridTime == index ? true : false,
+                                  typeGender: widget.typeGender,
+                                  presCard: () {
+                                    setState(() {
+                                      if (indexGridTime != index) {
+                                        indexGridTime = index;
+                                        showRow = true;
+                                      } else {
+                                        indexGridTime = -1;
+                                      }
+                                    });
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
+                  /*ItemReservationContainer(
+                title: 'ملاحظات',
+                image: 'assets/images/notes.png',
+                typeGender: widget.typeGender,
+                heightContainer: 190,
+                widget: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15.w),
+                  child: CustomTextFilledApp(
+                    hintText: 'اكتب ملاحظة ',
+                    typeGender: widget.typeGender,
+                    controller: notesController,
+                  ),
+                ),
+              ),*/
+                  SizedBox(height: 15.h),
+                  showRow
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ItemRowCardNote(
+                                image: 'assets/images/add_note.png',
+                                title: 'اضف \nملاحظة'),
+                            SizedBox(width: 25.w),
+                            ItemRowCardNote(
+                              image: 'assets/images/add_to_res.png',
+                              title: 'اضف لقائمة \nالحجوزات',
+                              select: selectCard,
+                              presCard: () {
+                                setState(() {
+                                  CategoriesDataPlace categoryDataPlace = widget
+                                              .page ==
+                                          1
+                                      ? listCategory1.elementAt(indexList!)
+                                      : widget.page == 2
+                                          ? listCategory2.elementAt(indexList!)
+                                          : listCategory3.elementAt(indexList!);
+
+                                  if (selectCard == false) {
+                                    selectCard = true;
+                                    showSwBtn = true;
+                                    categoryDataPlace.numberProduct =
+                                        categoryDataPlace.numberProduct! + 1;
+                                    isVisible = true;
+                                  }
+                                });
+                              },
+                            ),
+                            SizedBox(width: 25.w),
+                            showSwBtn
+                                ? ItemRowCardNote(
+                                    image: 'assets/images/new_res.png',
+                                    title: 'اضف حجز \nجديد',
+                                    presCard: () {
+                                      setState(() {
+                                        showTime = false;
+                                        showSwBtn = false;
+                                        showRow = false;
+                                        showDate = false;
+                                        selectCard = false;
+                                        selectedContainer = -1;
+                                        indexGridTime = -1;
+                                        date = DateTime.now();
+                                      });
+                                    },
+                                  )
+                                : SizedBox(),
+                          ],
+                        )
+                      : SizedBox(),
+                  SizedBox(height: 15.h),
+                  showSwBtn
+                      ? Row(
+                          children: [
+                            SizedBox(width: 30.w),
+                            FlutterSwitch(
+                              width: 60.w,
+                              height: 25.h,
+                              padding: 2.0,
+                              toggleSize: 20.0,
+                              borderRadius: 15.0,
+                              activeColor: titleStartPage,
+                              value: isToggled,
+                              // activeIcon: ,
+                              onToggle: (value) {
+                                setState(() {
+                                  isToggled = value;
+                                });
+                              },
+                            ),
+                            SizedBox(width: 15.w),
+                            CustomeText(
+                              title: 'ارسال رسالة تذكير قبل الموعد بساعة',
+                              fontSize: 14,
+                              color: Colors.grey.shade600,
                             ),
                           ],
-                        ),
-                        child: Center(
-                          child: Image.asset(
-                            'assets/images/backAB.png',
+                        )
+                      : SizedBox(),
+                  SizedBox(height: 15.h),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectWidgetReservation = 2;
+                      });
+                    },
+                    child: Container(
+                      height: 45.h,
+                      width: 165.w,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25.r),
+                        color: widget.typeGender == 1
+                            ? BGroundCategoryHomePage
+                            : BGroundCategoryHomePageMen,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/list_res.png',
                             width: 25.w,
                             height: 25.h,
                             color: widget.typeGender == 1
                                 ? titleStartPage
                                 : titleStartPage2,
                           ),
-                        ),
+                          SizedBox(width: 10.w),
+                          CustomeText(
+                            title: 'قائمة الحجوزات',
+                            color: widget.typeGender == 1
+                                ? titleStartPage
+                                : titleStartPage2,
+                            fontSize: 14.sp,
+                          ),
+                        ],
                       ),
-                    )
-                  : SizedBox(),
-            ],
+                    ),
+                  ),
+                  SizedBox(height: 15.h),
+                ],
+              ),
+            ),
           ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   crossAxisAlignment: CrossAxisAlignment.center,
-          //   children: [
-          //     ContainerCheck(),
-          //     SizedBox(width: 10.w),
-          //     DividerCheck(),
-          //     SizedBox(width: 10.w),
-          //     ContainerCheck(),
-          //     SizedBox(width: 10.w),
-          //     DividerCheck(),
-          //     SizedBox(width: 10.w),
-          //     ContainerCheck(),
-          //   ],
-          // ),
-
-          SizedBox(height: 15.h),
-          selectWidgetReservation == 1
-              ? columnReservation()
-              : selectWidgetReservation == 2
-                  ? columnConfirmReservation()
-                  : columnConfirm(),
         ],
       ),
     );
   }
 
-  Widget columnReservation() {
-    return Column(
-      children: [
-        ItemReservationContainer(
-          title: 'نوع الخدمة',
-          image: 'assets/images/service.png',
-          typeGender: widget.typeGender,
-          widget: SizedBox(
-            height: 75.h,
-            child: ListView.builder(
-              itemCount: widget.page == 1
-                  ? listCategory1.length
-                  : widget.page == 2
-                      ? listCategory2.length
-                      : listCategory3.length,
-              scrollDirection: Axis.horizontal,
-              padding: EdgeInsetsDirectional.only(start: 15.w),
-              itemBuilder: (context, index) {
-                CategoriesDataPlace categoryDataPlace = widget.page == 1
-                    ? listCategory1.elementAt(index)
-                    : widget.page == 2
-                        ? listCategory2.elementAt(index)
-                        : listCategory3.elementAt(index);
-                return CardCategoriesPlaceDetails(
-                  image: categoryDataPlace.image,
-                  title: categoryDataPlace.title,
-                  sizeImage: 35,
-                  fontSize: 14,
-                  space: 5,
-                  select: selectedContainer == index ? true : false,
-                  numProduct: categoryDataPlace.numberProduct!,
-                  showWidget:
-                      categoryDataPlace.numberProduct! != 0 ? isVisible : false,
-                  typeGender: widget.typeGender,
-                  pressCard: () {
-                    setState(() {
-                      if (selectedContainer != index) {
-                        selectedContainer = index;
-                        showDate = true;
-                        indexList = index;
-                      } else {
-                        selectedContainer = -1;
-                      }
-                    });
-                  },
-                );
-              },
-            ),
-          ),
-        ),
-        showDate
-            ? ItemReservationContainer(
-                title: 'التاريخ',
-                image: 'assets/images/calendar.png',
-                typeGender: widget.typeGender,
-                heightContainer: 150,
-                widget: SizedBox(
-                  height: 80.h,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.w),
-                    child: WeeklyDatePicker(
-                      selectedDay: date,
-                      changeDay: (value) => setState(() {
-                        date = value;
-                        showTime = true;
-                      }),
-                      selectedDigitColor: widget.typeGender == 1
-                          ? titleStartPage
-                          : titleStartPage2,
-                      enableWeeknumberText: false,
-                      weeknumberColor: widget.typeGender == 1
-                          ? titleStartPage
-                          : titleStartPage2,
-                      weeknumberTextColor: widget.typeGender == 1
-                          ? titleStartPage
-                          : titleStartPage2,
-                      backgroundColor:
-                          widget.typeGender == 1 ? BGDate : BGDateMen,
-                      weekdayTextColor:
-                          widget.typeGender == 1 ? BGTextDate : BGTextDateMen,
-                      digitsColor:
-                          widget.typeGender == 1 ? BGTextDate : BGTextDateMen,
-                      selectedBackgroundColor: Colors.white,
-                      weekdays: [
-                        "Sun",
-                        "Mon",
-                        "Tue",
-                        "Wed",
-                        "Thu",
-                        "Fri",
-                        "Sat"
-                      ],
-                      daysInWeek: 7,
-                    ),
-                  ),
-                ),
-              )
-            : SizedBox(),
-        showTime
-            ? ItemReservationContainer(
-                title: 'الساعة',
-                image: 'assets/images/clock.png',
-                typeGender: widget.typeGender,
-                heightContainer: 200,
-                widget: SizedBox(
-                  height: 145.h,
-                  child: GridView.builder(
-                    itemCount: listTime.length,
-                    padding: EdgeInsets.all(5.h),
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        childAspectRatio: 2.8,
-                        mainAxisSpacing: 5,
-                        crossAxisSpacing: 5),
-                    itemBuilder: (context, index) {
-                      String time = listTime.elementAt(index);
-                      return ContainerTime(
-                        title: time,
-                        select: indexGridTime == index ? true : false,
-                        typeGender: widget.typeGender,
-                        presCard: () {
-                          setState(() {
-                            if (indexGridTime != index) {
-                              indexGridTime = index;
-                              showRow = true;
-                            } else {
-                              indexGridTime = -1;
-                            }
-                          });
-                        },
-                      );
-                    },
-                  ),
-                ),
-              )
-            : SizedBox(),
-        /*ItemReservationContainer(
-          title: 'ملاحظات',
-          image: 'assets/images/notes.png',
-          typeGender: widget.typeGender,
-          heightContainer: 190,
-          widget: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.w),
-            child: CustomTextFilledApp(
-              hintText: 'اكتب ملاحظة ',
-              typeGender: widget.typeGender,
-              controller: notesController,
-            ),
-          ),
-        ),*/
-        SizedBox(height: 15.h),
-        showRow
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ItemRowCardNote(
-                      image: 'assets/images/add_note.png',
-                      title: 'اضف \nملاحظة'),
-                  SizedBox(width: 10.w),
-                  ItemRowCardNote(
-                    image: 'assets/images/add_to_res.png',
-                    title: 'اضف لقائمة \nالحجوزات',
-                    select: selectCard,
-                    presCard: () {
-                      setState(() {
-                        CategoriesDataPlace categoryDataPlace = widget.page == 1
-                            ? listCategory1.elementAt(indexList!)
-                            : widget.page == 2
-                                ? listCategory2.elementAt(indexList!)
-                                : listCategory3.elementAt(indexList!);
-
-                        if (selectCard == false) {
-                          selectCard = true;
-                          showSwBtn = true;
-                          categoryDataPlace.numberProduct =
-                              categoryDataPlace.numberProduct! + 1;
-                          isVisible = true;
-                        }
-                      });
-                    },
-                  ),
-                  SizedBox(width: 10.w),
-                  showSwBtn
-                      ? ItemRowCardNote(
-                          image: 'assets/images/new_res.png',
-                          title: 'اضف حجز \nجديد',
-                          presCard: () {
-                            setState(() {
-                              showTime = false;
-                              showSwBtn = false;
-                              showRow = false;
-                              showDate = false;
-                              selectCard = false;
-                              selectedContainer = -1;
-                              indexGridTime = -1;
-                              date = DateTime.now();
-                            });
-                          },
-                        )
-                      : SizedBox(),
-                ],
-              )
-            : SizedBox(),
-        SizedBox(height: 15.h),
-        showSwBtn
-            ? Row(
-                children: [
-                  SizedBox(width: 30.w),
-                  FlutterSwitch(
-                    width: 60.w,
-                    height: 25.h,
-                    padding: 2.0,
-                    toggleSize: 20.0,
-                    borderRadius: 15.0,
-                    activeColor: titleStartPage,
-                    value: isToggled,
-                    // activeIcon: ,
-                    onToggle: (value) {
-                      setState(() {
-                        isToggled = value;
-                      });
-                    },
-                  ),
-                  SizedBox(width: 15.w),
-                  CustomeText(
-                    title: 'ارسال رسالة تذكير قبل الموعد بساعة',
-                    fontSize: 14,
-                    color: Colors.grey.shade600,
-                  ),
-                ],
-              )
-            : SizedBox(),
-        SizedBox(height: 15.h),
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              selectWidgetReservation = 2;
-            });
-          },
-          child: Container(
-            height: 40.h,
-            width: 140.w,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25.r),
-              color: widget.typeGender == 1
-                  ? BGroundCategoryHomePage
-                  : BGroundCategoryHomePageMen,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/list_res.png',
-                  width: 25.w,
-                  height: 25.h,
-                  color:
-                      widget.typeGender == 1 ? titleStartPage : titleStartPage2,
-                ),
-                SizedBox(width: 10.w),
-                CustomeText(
-                  title: 'قائمة الحجوزات',
-                  color:
-                      widget.typeGender == 1 ? titleStartPage : titleStartPage2,
-                  fontSize: 14.sp,
-                ),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(height: 15.h),
-      ],
-    );
-  }
-
   Widget columnConfirmReservation() {
-    return Column(
-      children: [
-        /*Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.w),
-          child: Container(
-            width: double.infinity,
-            height: 200.h,
-            padding:
-                EdgeInsetsDirectional.only(top: 12.h, bottom: 12.h, start: 7.w),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.r),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: Offset(0, 0), // changes position of shadow
-                ),
-              ],
-            ),
-            child: Row(
-              children: [
-                Container(
-                  child: Image.asset(
-                    'assets/images/place2.png',
-                    width: 150.w,
-                    height: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                SizedBox(width: 10.w),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ItemRowConfirmDetails(
-                      title: 'الاسم',
-                      subTitle: 'صالون بيتفول للجمال والصحة',
-                      typeGender: widget.typeGender,
-                    ),
-                    SizedBox(height: 5.h),
-                    ItemRowConfirmDetails(
-                      title: 'العنوان',
-                      subTitle: 'الرياض , شارع الملك عبد العزيز',
-                      typeGender: widget.typeGender,
-                    ),
-                    SizedBox(height: 5.h),
-                    ItemRowConfirmDetails(
-                      title: 'الخدمة',
-                      subTitle: 'مكياج',
-                      typeGender: widget.typeGender,
-                    ),
-                    SizedBox(height: 5.h),
-                    ItemRowConfirmDetails(
-                      title: 'التاريخ',
-                      subTitle: 'الاربعاء 13 / 04 / 2022',
-                      typeGender: widget.typeGender,
-                    ),
-                    SizedBox(height: 5.h),
-                    ItemRowConfirmDetails(
-                      title: 'الساعة',
-                      subTitle: '01:00-02:00 مساء',
-                      typeGender: widget.typeGender,
-                    ),
-                    SizedBox(height: 5.h),
-                    ItemRowConfirmDetails(
-                      title: 'الرسوم',
-                      subTitle: '300  ر.س',
-                      typeGender: widget.typeGender,
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            /*Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.w),
+              child: Container(
+                width: double.infinity,
+                height: 200.h,
+                padding:
+                    EdgeInsetsDirectional.only(top: 12.h, bottom: 12.h, start: 7.w),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 0), // changes position of shadow
                     ),
                   ],
                 ),
-              ],
-            ),
-          ),
-        ),*/
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.w),
-          child: Container(
-            width: double.infinity,
-            height: 450.h,
-            padding:
-                EdgeInsetsDirectional.only(top: 12.h, bottom: 12.h, start: 7.w),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.r),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: Offset(0, 0), // changes position of shadow
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: Row(
                   children: [
-                    Image.asset(
-                      'assets/images/logoRe1.png',
-                      width: 45.w,
-                      height: 45.h,
+                    Container(
+                      child: Image.asset(
+                        'assets/images/place2.png',
+                        width: 150.w,
+                        height: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    SizedBox(width: 15.w),
+                    SizedBox(width: 10.w),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomeText(
-                          title: 'صالون بيوتفل للجمال الصحة',
-                          fontSize: 18.sp,
-                          // fontWeight: FontWeight.w900,
-                          color: widget.typeGender==1?titleStartPage:titleStartPage2,
+                        ItemRowConfirmDetails(
+                          title: 'الاسم',
+                          subTitle: 'صالون بيتفول للجمال والصحة',
+                          typeGender: widget.typeGender,
                         ),
                         SizedBox(height: 5.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                        ItemRowConfirmDetails(
+                          title: 'العنوان',
+                          subTitle: 'الرياض , شارع الملك عبد العزيز',
+                          typeGender: widget.typeGender,
+                        ),
+                        SizedBox(height: 5.h),
+                        ItemRowConfirmDetails(
+                          title: 'الخدمة',
+                          subTitle: 'مكياج',
+                          typeGender: widget.typeGender,
+                        ),
+                        SizedBox(height: 5.h),
+                        ItemRowConfirmDetails(
+                          title: 'التاريخ',
+                          subTitle: 'الاربعاء 13 / 04 / 2022',
+                          typeGender: widget.typeGender,
+                        ),
+                        SizedBox(height: 5.h),
+                        ItemRowConfirmDetails(
+                          title: 'الساعة',
+                          subTitle: '01:00-02:00 مساء',
+                          typeGender: widget.typeGender,
+                        ),
+                        SizedBox(height: 5.h),
+                        ItemRowConfirmDetails(
+                          title: 'الرسوم',
+                          subTitle: '300  ر.س',
+                          typeGender: widget.typeGender,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),*/
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.w),
+              child: Container(
+                width: double.infinity,
+                height: 450.h,
+                padding: EdgeInsetsDirectional.only(
+                    top: 12.h, bottom: 12.h, start: 7.w),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 0), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/logoRe1.png',
+                          width: 45.w,
+                          height: 45.h,
+                        ),
+                        SizedBox(width: 15.w),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             CustomeText(
-                              title: 'العنوان',
+                              title: 'صالون بيوتفل للجمال الصحة',
                               fontSize: 18.sp,
                               // fontWeight: FontWeight.w900,
-                              color: widget.typeGender==1?titleStartPage:titleStartPage2,
+                              color: widget.typeGender == 1
+                                  ? titleStartPage
+                                  : titleStartPage2,
                             ),
-                            SizedBox(width: 15.w),
-                            CustomeText(
-                              title: 'الرياض, شارع الملك عبد العزيز',
-                              fontSize: 11.sp,
-                              color: Colors.grey.shade500,
+                            SizedBox(height: 5.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                CustomeText(
+                                  title: 'العنوان',
+                                  fontSize: 18.sp,
+                                  // fontWeight: FontWeight.w900,
+                                  color: widget.typeGender == 1
+                                      ? titleStartPage
+                                      : titleStartPage2,
+                                ),
+                                SizedBox(width: 15.w),
+                                CustomeText(
+                                  title: 'الرياض, شارع الملك عبد العزيز',
+                                  fontSize: 11.sp,
+                                  color: Colors.grey.shade500,
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-                SizedBox(height: 10.h),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: listMyReservation.length,
-                    padding: EdgeInsets.symmetric(horizontal: 10.r,vertical: 15.h),
-                    itemBuilder: (context, index) {
-                      DataMyReservationPlaceDetails dataMyReservation =
-                      listMyReservation.elementAt(index);
-                      return ContainerReservationPlaceDetails(
-                        date: dataMyReservation.date,
-                        time: dataMyReservation.time,
-                        // title: dataMyReservation.title,
-                        // subTitle: dataMyReservation.subTitle,
-                        // image: dataMyReservation.image,
-                        typeGender: widget.typeGender,
-                      );
-                    },
-                  ),
-                ),
-                SizedBox(height: 10.h),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
-                  decoration: BoxDecoration(
-                    color: widget.typeGender==1?BGDate:BGDateMen,
-                    borderRadius: BorderRadius.circular(10.r),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: Offset(0, 0), // changes position of shadow
+                    SizedBox(height: 10.h),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: listMyReservation.length,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.r, vertical: 15.h),
+                        itemBuilder: (context, index) {
+                          DataMyReservationPlaceDetails dataMyReservation =
+                              listMyReservation.elementAt(index);
+                          return ContainerReservationPlaceDetails(
+                            date: dataMyReservation.date,
+                            time: dataMyReservation.time,
+                            // title: dataMyReservation.title,
+                            // subTitle: dataMyReservation.subTitle,
+                            // image: dataMyReservation.image,
+                            typeGender: widget.typeGender,
+                          );
+                        },
                       ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      CustomeText(
-                        title: 'اجمالي الرسوم',
-                        fontSize: 18.sp,
-                        color: widget.typeGender==1?titleStartPage:titleStartPage2,
+                    ),
+                    SizedBox(height: 10.h),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 10.w, vertical: 10.h),
+                      decoration: BoxDecoration(
+                        color: widget.typeGender == 1 ? BGDate : BGDateMen,
+                        borderRadius: BorderRadius.circular(10.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 0), // changes position of shadow
+                          ),
+                        ],
                       ),
-                      SizedBox(width: 20.w),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 5.w),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5.r),
-                        ),
-                        child: CustomeText(
-                          title: '1950 ر.س',
-                          fontSize: 18.sp,
-                          color: widget.typeGender==1?titleStartPage:titleStartPage2,
-                        ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CustomeText(
+                            title: 'اجمالي الرسوم',
+                            fontSize: 18.sp,
+                            color: widget.typeGender == 1
+                                ? titleStartPage
+                                : titleStartPage2,
+                          ),
+                          SizedBox(width: 20.w),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 5.w),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5.r),
+                            ),
+                            child: CustomeText(
+                              title: '1950 ر.س',
+                              fontSize: 18.sp,
+                              color: widget.typeGender == 1
+                                  ? titleStartPage
+                                  : titleStartPage2,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-
-              ],
-            ),
-          ),
-        ),
-        SizedBox(height: 20.h),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.w),
-          child: Container(
-            width: double.infinity,
-            height: 350.h,
-            padding:
-                EdgeInsetsDirectional.only(top: 12.h, bottom: 12.h, start: 7.w),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.r),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: Offset(0, 0), // changes position of shadow
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    SizedBox(width: 15.w),
-                    CustomeText(
-                      title: 'طريقة الدفع',
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w900,
-                      color: widget.typeGender == 1
-                          ? titleStartPage
-                          : titleStartPage2,
                     ),
                   ],
                 ),
-                SizedBox(height: 5.h),
-                Image.asset(
-                  'assets/images/cardPayment2.png',
-                  width: 340.w,
-                  height: 290.h,
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
-        SizedBox(height: 15.h),
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              selectWidgetReservation = 3;
-            });
-          },
-          child: Container(
-            height: 40.h,
-            width: 140.w,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25.r),
-              color: widget.typeGender == 1
-                  ? BGroundCategoryHomePage
-                  : BGroundCategoryHomePageMen,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/confirm_check.png',
-                  width: 25.w,
-                  height: 25.h,
-                  color:
-                      widget.typeGender == 1 ? titleStartPage : titleStartPage2,
+            SizedBox(height: 20.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.w),
+              child: Container(
+                width: double.infinity,
+                height: 350.h,
+                padding: EdgeInsetsDirectional.only(
+                    top: 12.h, bottom: 12.h, start: 7.w),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 0), // changes position of shadow
+                    ),
+                  ],
                 ),
-                SizedBox(width: 10.w),
-                CustomeText(
-                  title: 'تاكيد الدفع',
-                  color:
-                      widget.typeGender == 1 ? titleStartPage : titleStartPage2,
-                  fontSize: 14.sp,
-                ),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(height: 20.h),
-      ],
-    );
-  }
-
-  Widget columnConfirm() {
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 35.r),
-          child: ContainerConfBo(
-            child: Column(
-              children: [
-                SizedBox(height: 20.h),
-                Image.asset(
-                  'assets/images/confirm.png',
-                  width: 100.w,
-                  height: 100.h,
-                  color:
-                      widget.typeGender == 1 ? titleStartPage : titleStartPage2,
-                ),
-                SizedBox(height: 20.h),
-                CustomeText(
-                  title: 'تم الحجز بنجاح ..!!',
-                  color:
-                      widget.typeGender == 1 ? titleStartPage : titleStartPage2,
-                  fontSize: 22.sp,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 30.h),
-                Row(
+                child: Column(
                   children: [
-                    SizedBox(width: 15.w),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
                       children: [
+                        SizedBox(width: 15.w),
                         CustomeText(
-                          title: 'صالون بيتفول للجمال والصحة',
+                          title: 'طريقة الدفع',
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w900,
                           color: widget.typeGender == 1
                               ? titleStartPage
                               : titleStartPage2,
                         ),
-                        SizedBox(height: 10.h),
-                        ItemRowConfirmDetails(
-                            select: true,
-                            typeGender: widget.typeGender,
-                            image: 'assets/images/location2.png',
-                            subTitle: 'الرياض , شارع الملك عبد العزيز'),
-                        SizedBox(height: 15.h),
-                        ItemRowConfirmDetails(
-                            select: true,
-                            typeGender: widget.typeGender,
-                            image: 'assets/images/calendar.png',
-                            subTitle: 'الاربعاء  13 / 04 / 2022'),
-                        SizedBox(height: 15.h),
-                        ItemRowConfirmDetails(
-                            select: true,
-                            typeGender: widget.typeGender,
-                            image: 'assets/images/clock.png',
-                            subTitle: 'مساء 01:00-02:00'),
-                        SizedBox(height: 25.h),
+                      ],
+                    ),
+                    SizedBox(height: 5.h),
+                    Image.asset(
+                      'assets/images/cardPayment2.png',
+                      width: 340.w,
+                      height: 290.h,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 15.h),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  selectWidgetReservation = 3;
+                });
+              },
+              child: Container(
+                height: 40.h,
+                width: 140.w,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25.r),
+                  color: widget.typeGender == 1
+                      ? BGroundCategoryHomePage
+                      : BGroundCategoryHomePageMen,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/confirm_check.png',
+                      width: 25.w,
+                      height: 25.h,
+                      color: widget.typeGender == 1
+                          ? titleStartPage
+                          : titleStartPage2,
+                    ),
+                    SizedBox(width: 10.w),
+                    CustomeText(
+                      title: 'تاكيد الدفع',
+                      color: widget.typeGender == 1
+                          ? titleStartPage
+                          : titleStartPage2,
+                      fontSize: 14.sp,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 20.h),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget columnConfirm() {
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 35.r),
+              child: ContainerConfBo(
+                child: Column(
+                  children: [
+                    SizedBox(height: 20.h),
+                    Image.asset(
+                      'assets/images/confirm.png',
+                      width: 100.w,
+                      height: 100.h,
+                      color: widget.typeGender == 1
+                          ? titleStartPage
+                          : titleStartPage2,
+                    ),
+                    SizedBox(height: 20.h),
+                    CustomeText(
+                      title: 'تم الحجز بنجاح ..!!',
+                      color: widget.typeGender == 1
+                          ? titleStartPage
+                          : titleStartPage2,
+                      fontSize: 22.sp,
+                      fontWeight: FontWeight.bold,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 30.h),
+                    Row(
+                      children: [
+                        SizedBox(width: 15.w),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomeText(
+                              title: 'صالون بيتفول للجمال والصحة',
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w900,
+                              color: widget.typeGender == 1
+                                  ? titleStartPage
+                                  : titleStartPage2,
+                            ),
+                            SizedBox(height: 10.h),
+                            ItemRowConfirmDetails(
+                                select: true,
+                                typeGender: widget.typeGender,
+                                image: 'assets/images/location2.png',
+                                subTitle: 'الرياض , شارع الملك عبد العزيز'),
+                            SizedBox(height: 15.h),
+                            ItemRowConfirmDetails(
+                                select: true,
+                                typeGender: widget.typeGender,
+                                image: 'assets/images/calendar.png',
+                                subTitle: 'الاربعاء  13 / 04 / 2022'),
+                            SizedBox(height: 15.h),
+                            ItemRowConfirmDetails(
+                                select: true,
+                                typeGender: widget.typeGender,
+                                image: 'assets/images/clock.png',
+                                subTitle: 'مساء 01:00-02:00'),
+                            SizedBox(height: 25.h),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ContainerBtn(
+                          title: 'تعديل الحجز',
+                          image: 'assets/images/edit.png',
+                          typeGender: widget.typeGender,
+                          presCard: () {},
+                        ),
+                        SizedBox(width: 15.w),
+                        ContainerBtn(
+                          title: 'الغاء الحجز',
+                          image: 'assets/images/cancel.png',
+                          typeGender: widget.typeGender,
+                          presCard: () {},
+                        ),
                       ],
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ContainerBtn(
-                      title: 'تعديل الحجز',
-                      image: 'assets/images/edit.png',
+              ),
+            ),
+            SizedBox(height: 35.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ContainerBtnConfirm(
+                  title: 'الصفحة الرئيسية',
+                  typeGender: widget.typeGender,
+                  presCard: () {
+                    Get.offAll(HomeScreen(
                       typeGender: widget.typeGender,
-                      presCard: () {},
-                    ),
-                    SizedBox(width: 15.w),
-                    ContainerBtn(
-                      title: 'الغاء الحجز',
-                      image: 'assets/images/cancel.png',
-                      typeGender: widget.typeGender,
-                      presCard: () {},
-                    ),
-                  ],
+                    ));
+                  },
+                ),
+                SizedBox(width: 7.w),
+                ContainerBtnConfirm(
+                  title: 'احجز مواعيد اخرى',
+                  typeGender: widget.typeGender,
+                  presCard: () {
+                    setState(() {
+                      selectWidgetReservation = 1;
+                    });
+                  },
                 ),
               ],
             ),
-          ),
-        ),
-        SizedBox(height: 35.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ContainerBtnConfirm(
-              title: 'الصفحة الرئيسية',
-              typeGender: widget.typeGender,
-              presCard: () {
-                Get.offAll(HomeScreen(
-                  typeGender: widget.typeGender,
-                ));
-              },
-            ),
-            SizedBox(width: 7.w),
-            ContainerBtnConfirm(
-              title: 'احجز مواعيد اخرى',
-              typeGender: widget.typeGender,
-              presCard: () {
-                setState(() {
-                  selectWidgetReservation = 1;
-                });
-              },
-            ),
+            SizedBox(height: 30.h),
           ],
         ),
-        SizedBox(height: 30.h),
-      ],
+      ),
     );
   }
 }
+
+

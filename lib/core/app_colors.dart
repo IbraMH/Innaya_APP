@@ -1,7 +1,7 @@
 import 'dart:ui';
 const BGroundStartPage = Color(0xFFFEF9F5);
 const BtnStartPage = Color(0xFF6EB3CF);
-const titleStartPage = Color(0xFF571029);
+const titleStartPage = Color(0xFF921F47);
 const titleStartPage2 = Color(0xFF41526e);
 const BGroundCardHomePage = Color(0xFF77543E);
 const BGroundCategoryHomePage = Color(0xFFf3e0da);
@@ -22,6 +22,7 @@ const textTitleMyReservation = Color(0xFF606062);
 const BGContainerMyReservation = Color(0xFF465B6C);
 const BGDate = Color(0xFFf3e0da);
 const BGDateMen = Color(0xFFd3dceb);
-const BGTextDate = Color(0xFF571029);
+const BGTextDate = Color(0xFF921F47);
 const BGTextDateMen = Color(0xFF41526e);
+const BGTextFiledWomen = Color(0xFFFAF2F0);
 

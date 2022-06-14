@@ -71,13 +71,12 @@ class CardClosest extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 10.h),
             Row(
               children: [
                 SizedBox(width: 30.w),
                 CustomeText(
                   title: title,
-                  fontSize: 16.sp,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.bold,
                 ),
                 Spacer(),
@@ -106,7 +105,6 @@ class CardClosest extends StatelessWidget {
                 SizedBox(width: 5.w),
               ],
             ),
-            SizedBox(height: 5.h),
             Row(
               children: [
                 SizedBox(width: 5.w),
@@ -119,7 +117,7 @@ class CardClosest extends StatelessWidget {
                 SizedBox(width: 5.w),
                 CustomeText(
                   title: subTitle,
-                  fontSize: 16.sp,
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.grey.shade700,
                 ),

@@ -18,28 +18,33 @@ class ItemRowService extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Image.asset(
-          image,
-          width: 25.w,
-          height: 25.h,
-          color: typeGender==1?titleStartPage:titleStartPage2,
-        ),
-        SizedBox(width: 5.w),
-        CustomeText(
-          title: title,
-          color: typeGender==1?titleStartPage:titleStartPage2,
-          fontSize: 12.sp,
-        ),
-        SizedBox(width: 5.w),
-        CustomeText(
-          title: details,
-          color: Colors.grey.shade600,
-          fontSize: 12.sp,
-        ),
-      ],
+    return SizedBox(
+      width: 120.w,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Image.asset(
+            image,
+            width: 25.w,
+            height: 25.h,
+            color: typeGender==1?titleStartPage:titleStartPage2,
+          ),
+          SizedBox(width: 5.w),
+          // CustomeText(
+          //   title: title,
+          //   color: typeGender==1?titleStartPage:titleStartPage2,
+          //   fontSize: 12.sp,
+          // ),
+          // SizedBox(width: 5.w),
+          CustomeText(
+            title: details,
+            color: Colors.grey.shade600,
+            fontSize: 14.sp,
+            overflow: 1,
+            maxLines: 1,
+          ),
+        ],
+      ),
     );
   }
 }

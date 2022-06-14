@@ -23,8 +23,8 @@ class ItemRowCardNote extends StatelessWidget {
     return GestureDetector(
       onTap: presCard,
       child: Container(
-        width: 90.w,
-        height: 90.h,
+        width: 85.w,
+        height: 85.h,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: select?Colors.grey.shade300:Colors.transparent,

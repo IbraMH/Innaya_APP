@@ -8,6 +8,7 @@ import 'package:innaya_app/features/feature_my_reservation/presntation/widget/da
 import 'package:innaya_app/features/feature_my_reservation/presntation/widget/item_row_res.dart';
 import 'package:innaya_app/widget/custom_app_bar.dart';
 import 'package:innaya_app/widget/custome_text.dart';
+import 'package:innaya_app/widget/navigation_drawer.dart';
 import 'package:weekly_date_picker/weekly_date_picker.dart';
 
 class MyReservation extends StatefulWidget {
@@ -65,16 +66,22 @@ class _MyReservationState extends State<MyReservation> {
         subTitle: 'تدليك'),
   ];
 
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        key: _key,
         backgroundColor: BGroundStartPage,
+        drawer: NavigationDrawer(typeGender: widget.typeGender),
         body: Column(
           children: [
             CustomAppBar(typeGender: widget.typeGender,pressCard: (){
               Get.back();
-            },),
+            },
+              pressMenu: () => _key.currentState!.openDrawer(),
+            ),
             CustomeText(
               title: 'حجوزاتي',
               fontSize: 22.sp,

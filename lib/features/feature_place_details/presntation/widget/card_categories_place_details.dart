@@ -36,8 +36,8 @@ class CardCategoriesPlaceDetails extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            width: 85.w,
-            height: 75.h,
+            width: 80.w,
+            height: 70.h,
             alignment: Alignment.center,
             color: select&&typeGender==1?BGroundCategoryHomePage:select&&typeGender==2?BGroundCategoryHomePageMen2:Colors.transparent,
             padding: EdgeInsetsDirectional.only(top: 5.h),
@@ -59,23 +59,23 @@ class CardCategoriesPlaceDetails extends StatelessWidget {
             ),
           ),
           showWidget?Positioned(
-            left: 7.w,
+            left: 0.w,
             child: Container(
-              width: 20.w,
-              height: 20.h,
-              alignment: Alignment.center,
+              width: 30.w,
+              height: 30.h,
+              alignment: Alignment.topCenter,
               decoration: BoxDecoration(
                 color: Colors.red,
-                borderRadius: BorderRadius.circular(12.5.w),
+                borderRadius: BorderRadius.circular(15.w),
                 border: Border.all(
                   color: Colors.white,
-                  width: 1.5,
+                  width: 3,
                 ),
               ),
               child: CustomeText(
                 title: numProduct.toString(),
                 color: Colors.white,
-                fontSize: 10.sp,
+                fontSize: 14.sp,
                 textAlign: TextAlign.center,
                 fontWeight: FontWeight.w900,
               ),

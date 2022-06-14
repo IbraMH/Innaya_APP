@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:innaya_app/core/app_colors.dart';
+import 'package:innaya_app/features/feature_chat/presntation/view/chat_screen.dart';
 import 'package:innaya_app/features/feature_places/presntation/widget/card_categories_place.dart';
 import 'package:innaya_app/features/feature_places/presntation/widget/categories_data_place.dart';
 import 'package:innaya_app/features/feature_places/presntation/widget/container_icon.dart';
@@ -211,40 +213,45 @@ class ContainerPlaceScreen extends StatelessWidget {
                         ],
                       ),
                       Spacer(),
-                      SizedBox(
-                        height: 60.h,
-                        width: 40.w,
-                        child: Stack(
-                          children: [
-                            Center(
-                              child: Image.asset(
-                                'assets/images/chat.png',
-                                width: 30.w,
-                                height: 30.h,
-                                color: typeGender==1?titleStartPage:titleStartPage2,
-                              ),
-                            ),
-                            Positioned(
-                              top: 5.h,
-                              right: 0.w,
-                              child: Container(
-                                width: 22.w,
-                                height: 22.h,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
+                      GestureDetector(
+                        onTap: (){
+                          Get.to(ChatScreen(typeGender: typeGender,));
+                        },
+                        child: SizedBox(
+                          height: 60.h,
+                          width: 40.w,
+                          child: Stack(
+                            children: [
+                              Center(
+                                child: Image.asset(
+                                  'assets/images/chat.png',
+                                  width: 30.w,
+                                  height: 30.h,
                                   color: typeGender==1?titleStartPage:titleStartPage2,
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  border: Border.all(
-                                      color: Colors.white, width: 0.5),
-                                ),
-                                child: CustomeText(
-                                  title: '14',
-                                  fontSize: 12.sp,
-                                  color: Colors.white,
                                 ),
                               ),
-                            ),
-                          ],
+                              Positioned(
+                                top: 5.h,
+                                right: 0.w,
+                                child: Container(
+                                  width: 22.w,
+                                  height: 22.h,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: typeGender==1?titleStartPage:titleStartPage2,
+                                    borderRadius: BorderRadius.circular(20.r),
+                                    border: Border.all(
+                                        color: Colors.white, width: 0.5),
+                                  ),
+                                  child: CustomeText(
+                                    title: '14',
+                                    fontSize: 12.sp,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
