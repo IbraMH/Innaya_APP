@@ -1,8 +1,6 @@
 // ignore_for_file: always_specify_types
 
 import 'package:get/get.dart';
-import 'package:innaya_app/features/feature_auth/presntation/view/login.dart';
-import 'package:innaya_app/features/feature_auth/presntation/view/register.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/view/place_details.dart';
 import 'package:innaya_app/features/feature_splash/presntation/view/splash_screen.dart';
 import 'package:innaya_app/features/feature_start/presntation/view/start_page.dart';
