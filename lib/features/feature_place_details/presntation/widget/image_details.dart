@@ -3,17 +3,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ImageDetails extends StatelessWidget {
   String image;
+  GestureTapCallback? onTap;
 
   ImageDetails({
     required this.image,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      image,
-      width: 45.w,
-      height: 45.h,
+    return GestureDetector(
+      onTap: onTap,
+      child: Image.asset(
+        image,
+        width: 55.w,
+        height: 55.h,
+      ),
     );
   }
 }

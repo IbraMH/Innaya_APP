@@ -10,6 +10,7 @@ class CustomeBtn extends StatelessWidget {
   double widthBtn;
   double heightBtn;
   double fontSize;
+  Color textColor;
 
   CustomeBtn({
     required this.title,
@@ -18,6 +19,7 @@ class CustomeBtn extends StatelessWidget {
     this.widthBtn = 100,
     this.heightBtn = 40,
     this.fontSize = 18,
+    this.textColor = Colors.white,
   });
 
   @override
@@ -32,7 +34,7 @@ class CustomeBtn extends StatelessWidget {
       child: CustomeText(
         title: title,
         fontSize: fontSize.sp,
-        color: Colors.white,
+        color: textColor,
       ),
     );
   }

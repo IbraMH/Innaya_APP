@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:innaya_app/core/app_colors.dart';
+import 'package:innaya_app/features/feature_chat/presntation/view/chat_screen.dart';
 import 'package:innaya_app/features/feature_places/presntation/widget/card_categories_place.dart';
 import 'package:innaya_app/features/feature_places/presntation/widget/categories_data_place.dart';
 import 'package:innaya_app/features/feature_places/presntation/widget/container_icon.dart';
@@ -9,51 +11,51 @@ import 'package:innaya_app/widget/custome_text.dart';
 
 class ContainerPlaceScreen extends StatelessWidget {
   List<CategoriesDataPlace> listCategory1 = [
-    CategoriesDataPlace(title: 'قص شعر', image: 'assets/images/1.png'),
-    CategoriesDataPlace(title: 'مكياج', image: 'assets/images/2.png'),
-    CategoriesDataPlace(title: 'تضفير', image: 'assets/images/3.png'),
-    CategoriesDataPlace(title: 'سشوار', image: 'assets/images/4.png'),
-    CategoriesDataPlace(title: 'صبغات', image: 'assets/images/5.png'),
-    CategoriesDataPlace(title: 'غسيل', image: 'assets/images/6.png'),
-    CategoriesDataPlace(title: 'سبا', image: 'assets/images/7.png'),
+    CategoriesDataPlace(title: 'قص شعر', image: 'assets/images/1.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'مكياج', image: 'assets/images/2.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'تضفير', image: 'assets/images/3.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'سشوار', image: 'assets/images/4.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'صبغات', image: 'assets/images/5.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'غسيل', image: 'assets/images/6.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'سبا', image: 'assets/images/7.png',numberProduct: 0),
   ];
   List<CategoriesDataPlace> listCategory3 = [
-    CategoriesDataPlace(title: 'الاسترخاء', image: 'assets/images/17.png'),
-    CategoriesDataPlace(title: 'الانعكاسي', image: 'assets/images/18.png'),
-    CategoriesDataPlace(title: 'بالاحجار', image: 'assets/images/19.png'),
-    CategoriesDataPlace(title: 'بالزيت', image: 'assets/images/20.png'),
-    CategoriesDataPlace(title: 'بالعطر', image: 'assets/images/21.png'),
-    CategoriesDataPlace(title: 'السويدي', image: 'assets/images/22.png'),
+    CategoriesDataPlace(title: 'الاسترخاء', image: 'assets/images/17.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'الانعكاسي', image: 'assets/images/18.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'بالاحجار', image: 'assets/images/19.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'بالزيت', image: 'assets/images/20.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'بالعطر', image: 'assets/images/21.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'السويدي', image: 'assets/images/22.png',numberProduct: 0),
   ];
 
   List<CategoriesDataPlace> listCategory2 = [
-    CategoriesDataPlace(title: 'شد الجلد', image: 'assets/images/10.png'),
-    CategoriesDataPlace(title: 'تكبير الثدي', image: 'assets/images/11.png'),
-    CategoriesDataPlace(title: 'تصغير الثدي', image: 'assets/images/12.png'),
-    CategoriesDataPlace(title: 'شفط الدهون', image: 'assets/images/13.png'),
-    CategoriesDataPlace(title: 'حقن الدهون', image: 'assets/images/14.png'),
-    CategoriesDataPlace(title: 'شد الوجه', image: 'assets/images/15.png'),
-    CategoriesDataPlace(title: 'ازالة الشامات', image: 'assets/images/16.png'),
+    CategoriesDataPlace(title: 'شد الجلد', image: 'assets/images/10.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'تكبير الثدي', image: 'assets/images/11.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'تصغير الثدي', image: 'assets/images/12.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'شفط الدهون', image: 'assets/images/13.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'حقن الدهون', image: 'assets/images/14.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'شد الوجه', image: 'assets/images/15.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'ازالة الشامات', image: 'assets/images/16.png',numberProduct: 0),
   ];
 
   List<CategoriesDataPlace> listCategoryMen1 = [
-    CategoriesDataPlace(title: 'قص شعر', image: 'assets/images/1.png'),
-    CategoriesDataPlace(title: 'حلق لحية', image: 'assets/images/men2.png'),
-    CategoriesDataPlace(title: 'فرد الشعر', image: 'assets/images/men3.png'),
-    CategoriesDataPlace(title: 'سشوار', image: 'assets/images/4.png'),
-    CategoriesDataPlace(title: 'صبغات', image: 'assets/images/5.png'),
-    CategoriesDataPlace(title: 'غسيل', image: 'assets/images/men6.png'),
-    CategoriesDataPlace(title: 'ماسكات', image: 'assets/images/men7.png'),
+    CategoriesDataPlace(title: 'قص شعر', image: 'assets/images/1.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'حلق لحية', image: 'assets/images/men2.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'فرد الشعر', image: 'assets/images/men3.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'سشوار', image: 'assets/images/4.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'صبغات', image: 'assets/images/5.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'غسيل', image: 'assets/images/men6.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'ماسكات', image: 'assets/images/men7.png',numberProduct: 0),
   ];
 
   List<CategoriesDataPlace> listCategoryMen2 = [
-    CategoriesDataPlace(title: 'شد الجلد', image: 'assets/images/10.png'),
-    CategoriesDataPlace(title: 'تصغير الثدي', image: 'assets/images/men11.png'),
-    CategoriesDataPlace(title: 'شفط الدهون', image: 'assets/images/men12.png'),
-    CategoriesDataPlace(title: 'حقن الدهون', image: 'assets/images/men13.png'),
-    CategoriesDataPlace(title: 'شد الوجه', image: 'assets/images/men14.png'),
+    CategoriesDataPlace(title: 'شد الجلد', image: 'assets/images/10.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'تصغير الثدي', image: 'assets/images/men11.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'شفط الدهون', image: 'assets/images/men12.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'حقن الدهون', image: 'assets/images/men13.png',numberProduct: 0),
+    CategoriesDataPlace(title: 'شد الوجه', image: 'assets/images/men14.png',numberProduct: 0),
     CategoriesDataPlace(
-        title: 'ازالة الشامات', image: 'assets/images/men15.png'),
+        title: 'ازالة الشامات', image: 'assets/images/men15.png',numberProduct: 0),
   ];
 
   String title;
@@ -211,40 +213,45 @@ class ContainerPlaceScreen extends StatelessWidget {
                         ],
                       ),
                       Spacer(),
-                      SizedBox(
-                        height: 60.h,
-                        width: 40.w,
-                        child: Stack(
-                          children: [
-                            Center(
-                              child: Image.asset(
-                                'assets/images/chat.png',
-                                width: 30.w,
-                                height: 30.h,
-                                color: typeGender==1?titleStartPage:titleStartPage2,
-                              ),
-                            ),
-                            Positioned(
-                              top: 5.h,
-                              right: 0.w,
-                              child: Container(
-                                width: 22.w,
-                                height: 22.h,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
+                      GestureDetector(
+                        onTap: (){
+                          Get.to(ChatScreen(typeGender: typeGender,));
+                        },
+                        child: SizedBox(
+                          height: 60.h,
+                          width: 40.w,
+                          child: Stack(
+                            children: [
+                              Center(
+                                child: Image.asset(
+                                  'assets/images/chat.png',
+                                  width: 30.w,
+                                  height: 30.h,
                                   color: typeGender==1?titleStartPage:titleStartPage2,
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  border: Border.all(
-                                      color: Colors.white, width: 0.5),
-                                ),
-                                child: CustomeText(
-                                  title: '14',
-                                  fontSize: 12.sp,
-                                  color: Colors.white,
                                 ),
                               ),
-                            ),
-                          ],
+                              Positioned(
+                                top: 5.h,
+                                right: 0.w,
+                                child: Container(
+                                  width: 22.w,
+                                  height: 22.h,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: typeGender==1?titleStartPage:titleStartPage2,
+                                    borderRadius: BorderRadius.circular(20.r),
+                                    border: Border.all(
+                                        color: Colors.white, width: 0.5),
+                                  ),
+                                  child: CustomeText(
+                                    title: '14',
+                                    fontSize: 12.sp,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -257,15 +264,12 @@ class ContainerPlaceScreen extends StatelessWidget {
                         width: 65.w,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
+                          color: typeGender==1?BGroundCategoryHomePage:BGroundCategoryHomePageMen,
                           borderRadius: BorderRadius.circular(15.r),
-                          gradient: LinearGradient(
-                              colors: [typeGender==1?Color(0xff6D096D):Color(0xff1A1A1A), typeGender==1?Color(0xffFAC5DC):Color(0xffCCCCCC)],
-                              stops: [0.0, 1.0],
-                              tileMode: TileMode.clamp),
                         ),
                         child: CustomeText(
                           title: 'احجز الان',
-                          color: Colors.white,
+                          color: typeGender==1?titleStartPage:titleStartPage2,
                           fontSize: 12.sp,
                         ),
                       ),

@@ -299,10 +299,9 @@ class ContainerService extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsetsDirectional.only(
-          bottom: 20.h, start: 10.w, end: 10.w, top: 15.h),
+          bottom: 10.h, start: 10.w, end: 10.w, top: 5.h),
       child: Container(
         width: double.infinity,
-        height: 240.h,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15.r),
@@ -321,30 +320,13 @@ class ContainerService extends StatelessWidget {
             Row(
               children: [
                 SizedBox(width: 10.w),
-                Container(
-                  width: 60.w,
-                  height: 60.h,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5.r),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: Offset(0, 0), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: Image.asset(
-                    image,
-                    width: 35.w,
-                    height: 35.h,
-                    color: typeGender==1?titleStartPage:titleStartPage2,
-                  ),
+                Image.asset(
+                  image,
+                  width: 35.w,
+                  height: 35.h,
+                  color: typeGender == 1 ? titleStartPage : titleStartPage2,
                 ),
-                SizedBox(width: 10.w),
+                SizedBox(width: 25.w),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -359,10 +341,10 @@ class ContainerService extends StatelessWidget {
                         ),
                         SizedBox(width: 15.w),
                         ItemRowService(
-                            title: 'السعر',
-                            image: 'assets/images/cardPayment.png',
-                            details: price,
-                            typeGender: typeGender,
+                          title: 'السعر',
+                          image: 'assets/images/cardPayment.png',
+                          details: price,
+                          typeGender: typeGender,
                         ),
                       ],
                     ),
@@ -370,39 +352,86 @@ class ContainerService extends StatelessWidget {
                     Row(
                       children: [
                         ItemRowService(
-                            title: 'المدة',
-                            image: 'assets/images/time.png',
-                            details: time,
-                            typeGender: typeGender,
+                          title: 'المدة',
+                          image: 'assets/images/time.png',
+                          details: time,
+                          typeGender: typeGender,
                         ),
-                        SizedBox(width: 50.w),
+                        SizedBox(width: 18.w),
                         Container(
-                          height: 30.h,
-                          width: 80.w,
                           alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(horizontal: 5.w,vertical: 5.h),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15.r),
-                            gradient: LinearGradient(
-                                colors: [typeGender==1?Color(0xff6D096D):Color(0xff1A1A1A),typeGender==1?Color(0xffFAC5DC):Color(0xffCCCCCC)],
-                                stops: [0.0, 1.0],
-                                tileMode: TileMode.clamp),
+                            borderRadius: BorderRadius.circular(5.r),
+                            color: typeGender == 1
+                                ? BGroundCategoryHomePage
+                                : BGroundCategoryHomePageMen,
                           ),
-                          child: CustomeText(
-                            title: 'احجز الان',
-                            color: Colors.white,
-                            fontSize: 12.sp,
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                'assets/images/whatsapp2.png',
+                                width: 20.w,
+                                height: 20.h,
+                                color: typeGender == 1
+                                    ? titleStartPage
+                                    : titleStartPage2,
+                              ),
+                              SizedBox(width: 5.w),
+                              CustomeText(
+                                title: 'للاستفسار',
+                                color: typeGender == 1
+                                    ? titleStartPage
+                                    : titleStartPage2,
+                                fontSize: 12.sp,
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ],
                 ),
+                Spacer(),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: RotatedBox(
+                    quarterTurns: 3,
+                    child: Container(
+                      height: 30.h,
+                      width: 80.w,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 0), // changes position of shadow
+                          ),
+                        ],
+                        color: typeGender == 1
+                            ? BGroundCategoryHomePage
+                            : BGroundCategoryHomePageMen,
+                      ),
+                      child: CustomeText(
+                        title: 'احجز الان',
+                        color: typeGender == 1
+                            ? titleStartPage
+                            : titleStartPage2,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10.w),
               ],
             ),
-            SizedBox(height: 30.h),
+            SizedBox(height: 10.h),
             // ItemColumnImageDetails(),
             SizedBox(
-              height: 130.h,
+              height: 140.h,
               child: ListView.builder(
                 itemCount: page == 1
                     ? listDataImageDetails1.length

@@ -18,7 +18,7 @@ class TextCheck extends StatelessWidget {
       title: title,
       fontSize: 14.sp,
       color: typeGender==1?titleStartPage:titleStartPage2,
-      fontWeight: FontWeight.w900,
+      // fontWeight: FontWeight.w900,
     );
   }
 }

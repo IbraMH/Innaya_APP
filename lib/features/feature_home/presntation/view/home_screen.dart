@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:innaya_app/core/app_size.dart';
 import 'package:innaya_app/features/feature_home/presntation/widget/card_categories_home.dart';
 import 'package:innaya_app/features/feature_home/presntation/widget/card_closest.dart';
+import 'package:innaya_app/features/feature_my_reservation/presntation/view/my_reservation.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/widget/card_top_rated.dart';
 import 'package:innaya_app/features/feature_home/presntation/widget/categories_data.dart';
 import 'package:innaya_app/features/feature_home/presntation/widget/closest_data.dart';
@@ -15,7 +16,9 @@ import 'package:innaya_app/features/feature_home/presntation/widget/item_row_typ
 import 'package:innaya_app/features/feature_place_details/presntation/widget/top_rated_data.dart';
 import 'package:innaya_app/features/feature_places/presntation/view/places_screen.dart';
 import 'package:innaya_app/localization/lang/message.dart';
+import 'package:innaya_app/widget/custom_app_bar.dart';
 import 'package:innaya_app/widget/custome_text.dart';
+import 'package:innaya_app/widget/navigation_drawer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePageScreen extends StatefulWidget {
@@ -34,6 +37,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
   int selectedImage = 0;
   int? indexImage;
   int indexContainer = 1;
+  bool showMenu = false;
 
   List<CategoriesData> listCategory1 = [
     CategoriesData(title: 'قص شعر', image: 'assets/images/1.png'),
@@ -128,6 +132,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
         length: 2500),
   ];
 
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -140,315 +146,293 @@ class _HomePageScreenState extends State<HomePageScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: BGroundStartPage,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/images/menu.png',
-                    width: 25.w,
-                    height: 25.h,
-                    color: widget.typeGender == 1
-                        ? titleStartPage
-                        : titleStartPage2,
-                  ),
-                  Spacer(),
-                  Image.asset(
-                    widget.typeGender == 1
-                        ? 'assets/images/logo_home.png'
-                        : 'assets/images/logo_home_men.png',
-                    width: 70.w,
-                    height: 70.h,
-                  ),
-                  Spacer(),
-                  Image.asset(
-                    'assets/images/search.png',
-                    width: 25.w,
-                    height: 25.h,
-                    color: widget.typeGender == 1
-                        ? titleStartPage
-                        : titleStartPage2,
-                  ),
-                ],
+        key: _key,
+        // appBar: AppBar(),
+        drawer: NavigationDrawer(typeGender: widget.typeGender),
+        body: SingleChildScrollView(
+
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomAppBar(
+                typeGender: widget.typeGender,
+                pressCard: (){
+                  Get.back();
+                },
+                pressMenu: () => _key.currentState!.openDrawer(),
               ),
-            ),
-            SizedBox(
-              height: SCREEN_HIGHT * 0.8,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 270.h,
-                      width: double.infinity,
-                      child: Stack(
-                        children: [
-                          PageView.builder(
-                            controller: controller,
-                            itemCount: widget.typeGender == 1
-                                ? listSlider.length
-                                : listSliderMen1.length,
-                            clipBehavior: Clip.antiAlias,
-                            onPageChanged: (index) {
-                              setState(() {
-                                selectedImage = index;
-                              });
-                            },
-                            itemBuilder: (context, index) {
-                              String listImageSlider = widget.typeGender == 1
-                                  ? listSlider.elementAt(index)
-                                  : widget.typeGender == 2 &&
-                                          indexContainer == 1
-                                      ? listSliderMen1.elementAt(index)
-                                      : widget.typeGender == 2 &&
-                                              indexContainer == 2
-                                          ? listSliderMen2.elementAt(index)
-                                          : listSliderMen3.elementAt(index);
-                              return Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 5.w, vertical: 10.h),
-                                child: Card(
-                                  elevation: 5,
-                                  clipBehavior: Clip.antiAlias,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15.r),
-                                  ),
-                                  child: Image.asset(
-                                    listImageSlider,
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                    fit: BoxFit.cover,
-                                    isAntiAlias: true,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          Positioned(
-                            bottom: 15.h,
-                            right: 0,
-                            left: 0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Card(
-                                  color: Colors.white.withOpacity(0.4),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30.r),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10.w, vertical: 10.h),
-                                    child: SmoothPageIndicator(
-                                        controller: controller!,
-                                        // PageController
-                                        count: widget.typeGender == 1
-                                            ? listSlider.length
-                                            : listSliderMen1.length,
-                                        effect: WormEffect(
-                                            dotWidth: 10.0.w,
-                                            dotHeight: 10.0.w,
-                                            activeDotColor: Colors.blue),
-                                        // your preferred effect
-                                        onDotClicked: (_currentLocation) {}),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 15.h),
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(start: 10.w),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              ContainerTypeCategories(
-                                title: widget.typeGender == 1
-                                    ? 'صالون الكوافير'
-                                    : 'صالون',
-                                bGColor: Colors.white,
-                                select: indexContainer == 1 ? true : false,
-                                typeGender: widget.typeGender,
-                                pressCard: () {
-                                  setState(() {
-                                    if (indexContainer != 1) {
-                                      indexContainer = 1;
-                                      indexImage = null;
-                                      selectedImage=0;
-                                    }
-                                  });
-                                },
-                              ),
-                              SizedBox(width: 10.w),
-                              ContainerTypeCategories(
-                                title: 'عيادات تجميل',
-                                select: indexContainer == 2 ? true : false,
-                                typeGender: widget.typeGender,
-                                pressCard: () {
-                                  setState(() {
-                                    if (indexContainer != 2) {
-                                      indexContainer = 2;
-                                      indexImage = null;
-                                      selectedImage=0;
-                                    }
-                                  });
-                                },
-                              ),
-                              SizedBox(width: 10.w),
-                              ContainerTypeCategories(
-                                title: 'تدليك & ساونا',
-                                select: indexContainer == 3 ? true : false,
-                                typeGender: widget.typeGender,
-                                pressCard: () {
-                                  setState(() {
-                                    if (indexContainer != 3) {
-                                      indexContainer = 3;
-                                      indexImage = null;
-                                      selectedImage=0;
-                                    }
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          Container(
-                            height: 130.h,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  spreadRadius: 2,
-                                  blurRadius: 10,
-                                  offset: Offset(
-                                      0, 3), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            padding: EdgeInsets.symmetric(vertical: 15.h),
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount:
-                                  indexContainer == 1 && widget.typeGender == 1
-                                      ? listCategory1.length
-                                      : indexContainer == 1 &&
-                                              widget.typeGender == 2
-                                          ? listCategoryMen1.length
-                                          : indexContainer == 2 &&
-                                                  widget.typeGender == 1
-                                              ? listCategory2.length
-                                              : indexContainer == 2 &&
-                                                      widget.typeGender == 2
-                                                  ? listCategoryMen2.length
-                                                  : listCategory3.length,
+              SizedBox(
+                height: SCREEN_HIGHT * 0.8,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 250.h,
+                        width: double.infinity,
+                        child: Stack(
+                          children: [
+                            PageView.builder(
+                              controller: controller,
+                              itemCount: widget.typeGender == 1
+                                  ? listSlider.length
+                                  : listSliderMen1.length,
+                              clipBehavior: Clip.antiAlias,
+                              onPageChanged: (index) {
+                                setState(() {
+                                  selectedImage = index;
+                                });
+                              },
                               itemBuilder: (context, index) {
-                                CategoriesData listImages =
-                                    indexContainer == 1 &&
-                                            widget.typeGender == 1
-                                        ? listCategory1.elementAt(index)
-                                        : indexContainer == 1 &&
-                                                widget.typeGender == 2
-                                            ? listCategoryMen1.elementAt(index)
-                                            : indexContainer == 2 &&
-                                                    widget.typeGender == 1
-                                                ? listCategory2.elementAt(index)
-                                                : indexContainer == 2 &&
-                                                        widget.typeGender == 2
-                                                    ? listCategoryMen2
-                                                        .elementAt(index)
-                                                    : listCategory3
-                                                        .elementAt(index);
-                                return CardCategoriesHome(
-                                  image: listImages.image,
-                                  title: listImages.title,
-                                  select: indexImage == index ? true : false,
+                                String listImageSlider = widget.typeGender == 1
+                                    ? listSlider.elementAt(index)
+                                    : widget.typeGender == 2 &&
+                                            indexContainer == 1
+                                        ? listSliderMen1.elementAt(index)
+                                        : widget.typeGender == 2 &&
+                                                indexContainer == 2
+                                            ? listSliderMen2.elementAt(index)
+                                            : listSliderMen3.elementAt(index);
+                                return Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 5.w, vertical: 10.h),
+                                  child: Card(
+                                    elevation: 5,
+                                    clipBehavior: Clip.antiAlias,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.r),
+                                    ),
+                                    child: Image.asset(
+                                      listImageSlider,
+                                      width: double.infinity,
+                                      height: double.infinity,
+                                      fit: BoxFit.cover,
+                                      isAntiAlias: true,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            Positioned(
+                              bottom: 15.h,
+                              right: 0,
+                              left: 0,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Card(
+                                    color: Colors.white.withOpacity(0.4),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.r),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10.w, vertical: 10.h),
+                                      child: SmoothPageIndicator(
+                                          controller: controller!,
+                                          // PageController
+                                          count: widget.typeGender == 1
+                                              ? listSlider.length
+                                              : listSliderMen1.length,
+                                          effect: WormEffect(
+                                              dotWidth: 10.0.w,
+                                              dotHeight: 10.0.w,
+                                              activeDotColor: Colors.blue),
+                                          // your preferred effect
+                                          onDotClicked: (_currentLocation) {}),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // SizedBox(height: 15.h),
+                      Padding(
+                        padding: EdgeInsetsDirectional.only(start: 10.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                ContainerTypeCategories(
+                                  title: widget.typeGender == 1
+                                      ? 'صالون الكوافير'
+                                      : 'صالون',
+                                  bGColor: Colors.white,
+                                  select: indexContainer == 1 ? true : false,
                                   typeGender: widget.typeGender,
                                   pressCard: () {
                                     setState(() {
-                                      if (indexImage != index) {
-                                        indexImage = index;
-                                      } else {
-                                        indexImage = -1;
+                                      if (indexContainer != 1) {
+                                        indexContainer = 1;
+                                        indexImage = null;
+                                        selectedImage = 0;
                                       }
                                     });
                                   },
-                                );
+                                ),
+                                SizedBox(width: 10.w),
+                                ContainerTypeCategories(
+                                  title: 'عيادات تجميل',
+                                  select: indexContainer == 2 ? true : false,
+                                  typeGender: widget.typeGender,
+                                  pressCard: () {
+                                    setState(() {
+                                      if (indexContainer != 2) {
+                                        indexContainer = 2;
+                                        indexImage = null;
+                                        selectedImage = 0;
+                                      }
+                                    });
+                                  },
+                                ),
+                                SizedBox(width: 10.w),
+                                ContainerTypeCategories(
+                                  title: 'تدليك & ساونا',
+                                  select: indexContainer == 3 ? true : false,
+                                  typeGender: widget.typeGender,
+                                  pressCard: () {
+                                    setState(() {
+                                      if (indexContainer != 3) {
+                                        indexContainer = 3;
+                                        indexImage = null;
+                                        selectedImage = 0;
+                                      }
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                            Container(
+                              height: 120.h,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    spreadRadius: 2,
+                                    blurRadius: 10,
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              padding: EdgeInsetsDirectional.only(top: 15.h,bottom:5.h,),
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount:
+                                    indexContainer == 1 && widget.typeGender == 1
+                                        ? listCategory1.length
+                                        : indexContainer == 1 &&
+                                                widget.typeGender == 2
+                                            ? listCategoryMen1.length
+                                            : indexContainer == 2 &&
+                                                    widget.typeGender == 1
+                                                ? listCategory2.length
+                                                : indexContainer == 2 &&
+                                                        widget.typeGender == 2
+                                                    ? listCategoryMen2.length
+                                                    : listCategory3.length,
+                                itemBuilder: (context, index) {
+                                  CategoriesData listImages =
+                                      indexContainer == 1 &&
+                                              widget.typeGender == 1
+                                          ? listCategory1.elementAt(index)
+                                          : indexContainer == 1 &&
+                                                  widget.typeGender == 2
+                                              ? listCategoryMen1.elementAt(index)
+                                              : indexContainer == 2 &&
+                                                      widget.typeGender == 1
+                                                  ? listCategory2.elementAt(index)
+                                                  : indexContainer == 2 &&
+                                                          widget.typeGender == 2
+                                                      ? listCategoryMen2
+                                                          .elementAt(index)
+                                                      : listCategory3
+                                                          .elementAt(index);
+                                  return CardCategoriesHome(
+                                    image: listImages.image,
+                                    title: listImages.title,
+                                    select: indexImage == index ? true : false,
+                                    typeGender: widget.typeGender,
+                                    pressCard: () {
+                                      setState(() {
+                                        if (indexImage != index) {
+                                          indexImage = index;
+                                        } else {
+                                          indexImage = -1;
+                                        }
+                                      });
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 10.h),
+                            ItemRowType(
+                              title: HTopRated.tr,
+                              typeGender: widget.typeGender,
+                              pressCard: () {
+                                Get.to(PlacesScreen(
+                                  typeGender: widget.typeGender,
+                                ));
                               },
                             ),
-                          ),
-                          SizedBox(height: 20.h),
-                          ItemRowType(
-                            title: HTopRated.tr,
-                            typeGender: widget.typeGender,
-                            pressCard: () {
-                              Get.to(PlacesScreen(
-                                typeGender: widget.typeGender,
-                              ));
-                            },
-                          ),
-                          SizedBox(height: 5.h),
-                          SizedBox(
-                            height: 270.h,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: listClosest.length,
-                              itemBuilder: (context, index) {
-                                ClosestData closestData =
-                                    listClosest.elementAt(index);
-                                return CardClosest(
-                                  title: closestData.title,
-                                  subTitle: closestData.subTitle,
-                                  image: closestData.image,
-                                  length: closestData.length.toString(),
-                                );
+                            SizedBox(
+                              height: 250.h,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: listClosest.length,
+                                itemBuilder: (context, index) {
+                                  ClosestData closestData =
+                                      listClosest.elementAt(index);
+                                  return CardClosest(
+                                    title: closestData.title,
+                                    subTitle: closestData.subTitle,
+                                    image: closestData.image,
+                                    length: closestData.length.toString(),
+                                  );
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 5.h),
+                            ItemRowType(
+                              title: HClosestToYou.tr,
+                              typeGender: widget.typeGender,
+                              pressCard: () {
+                                Get.to(PlacesScreen(
+                                  typeGender: widget.typeGender,
+                                ));
                               },
                             ),
-                          ),
-                          SizedBox(height: 20.h),
-                          ItemRowType(
-                            title: HClosestToYou.tr,
-                            typeGender: widget.typeGender,
-                            pressCard: () {
-                              Get.to(PlacesScreen(
-                                typeGender: widget.typeGender,
-                              ));
-                            },
-                          ),
-                          SizedBox(height: 5.h),
-                          SizedBox(
-                            height: 270.h,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: listClosest.length,
-                              itemBuilder: (context, index) {
-                                ClosestData closestData =
-                                    listClosest.elementAt(index);
-                                return CardClosest(
-                                  title: closestData.title,
-                                  subTitle: closestData.subTitle,
-                                  image: closestData.image,
-                                  length: closestData.length.toString(),
-                                );
-                              },
+                            SizedBox(
+                              height: 270.h,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: listClosest.length,
+                                itemBuilder: (context, index) {
+                                  ClosestData closestData =
+                                      listClosest.elementAt(index);
+                                  return CardClosest(
+                                    title: closestData.title,
+                                    subTitle: closestData.subTitle,
+                                    image: closestData.image,
+                                    length: closestData.length.toString(),
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 25.h),
-                  ],
+                      SizedBox(height: 25.h),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

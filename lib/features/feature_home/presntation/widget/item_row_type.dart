@@ -23,7 +23,7 @@ class ItemRowType extends StatelessWidget {
         children: [
           CustomeText(
             title: title,
-            fontSize: 18.sp,
+            fontSize: 16.sp,
             color: Colors.grey.shade700,
             fontWeight: FontWeight.bold,
           ),

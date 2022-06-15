@@ -25,7 +25,7 @@ class ContainerTime extends StatelessWidget {
         height: 35.h,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: select&&typeGender==1?BGroundTextFilledColor:select&&typeGender==2?BGroundCategoryHomePageMen2:Colors.white,
+          color: select&&typeGender==1?BGroundCategoryHomePageMen2:select&&typeGender==2?BGroundCategoryHomePageMen2:Colors.white,
           borderRadius: BorderRadius.circular(25.r),
           boxShadow: [
             BoxShadow(
@@ -39,7 +39,7 @@ class ContainerTime extends StatelessWidget {
         child: CustomeText(
           title: title,
           fontSize: 12.sp,
-          color: select?Colors.white:typeGender==1?BGroundTextColor:BGroundTextColorMen,
+          color: select?Colors.white:typeGender==1?BGroundCategoryHomePageMen2:BGroundCategoryHomePageMen2,
           fontWeight: FontWeight.w900,
         ),
       ),

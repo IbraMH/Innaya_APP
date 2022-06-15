@@ -9,7 +9,7 @@ import 'package:innaya_app/widget/custom_textfilled_auth_app.dart';
 import 'package:innaya_app/widget/custome_text.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -20,6 +20,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   XFile? _pickedFile;
   bool isLoading = false;
   bool onChange = false;
+  int typeGender = 1;
 
   @override
   void initState() {
@@ -81,7 +82,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               borderRadius: BorderRadius.circular(10.r),
                               gradient: LinearGradient(colors: [
-                                Color(0xffF4EAF3),
+                                Color(0xffF6E9E5),
                                 Color(0xffFEFEFE)
                               ], stops: [
                                 0.0,
@@ -111,6 +112,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     'assets/images/addImage.png',
                                     width: 45.w,
                                     height: 45.h,
+                                      color: typeGender==1?titleStartPage:titleStartPage2,
                                   )),
                           ),
                         ),
@@ -133,6 +135,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         suffixIcon: 'assets/images/user.png',
                         hintText: 'اسم المستخدم',
                         textInputType: TextInputType.name,
+                        typeGender: typeGender,
                       ),
                       SizedBox(height: 12.h),
                       CustomTextFilledAuthApp(
@@ -140,6 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         suffixIcon: 'assets/images/email.png',
                         hintText: 'البريد الالكتروني',
                         paddingIcon: 12,
+                        typeGender: typeGender,
                       ),
                       SizedBox(height: 12.h),
                       CustomTextFilledAuthApp(
@@ -148,6 +152,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: 'رقم الموبايل',
                         textInputType: TextInputType.phone,
                         paddingIcon: 10,
+                        typeGender: typeGender,
                       ),
                       SizedBox(height: 12.h),
                       CustomTextFilledAuthApp(
@@ -156,6 +161,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: 'كلمة المرور',
                         textInputType: TextInputType.visiblePassword,
                         obscureText: true,
+                        typeGender: typeGender,
                       ),
                       SizedBox(height: 12.h),
                       CustomTextFilledAuthApp(
@@ -164,6 +170,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: 'تاكيد كلمة المرور',
                         textInputType: TextInputType.visiblePassword,
                         obscureText: true,
+                        typeGender: typeGender,
                       ),
                       SizedBox(height: 12.h),
                       CustomTextFilledAuthApp(
@@ -171,6 +178,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         suffixIcon: 'assets/images/arrowDown2.png',
                         hintText: 'اختر سؤال التحقق',
                         readOnly: true,
+                        typeGender: typeGender,
                         pressCard: () {},
                       ),
                       SizedBox(height: 12.h),
@@ -180,6 +188,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: 'اجابة سؤال التحقق',
                         textInputType: TextInputType.text,
                         paddingIcon: 12,
+                        typeGender: typeGender,
                       ),
                       SizedBox(height: 12.h),
                       Row(
@@ -224,18 +233,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         clipBehavior: Clip.antiAlias,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15.w),
-                          gradient: LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                              Color(0xffE994BE),
-                              Color(0xffF6E5EF),
-                              Color(0xffE994BE),
-                            ],
-                          ),
+                          color: Color(0xffF3E0DA),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
+                              color: Colors.grey.withOpacity(0.2),
                               spreadRadius: 2,
                               blurRadius: 5,
                               offset:

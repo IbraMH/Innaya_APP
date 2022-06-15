@@ -58,7 +58,7 @@ class CustomTextFilledApp extends StatelessWidget {
               onChanged: onChanged,
               focusNode: focusNode,
               readOnly: readOnly,
-              maxLines: 2,
+              maxLines: 3,
               // textInputAction:(type==null)?TextInputAction.next:TextInputAction.done ,
 
               keyboardType: textInputType,
@@ -72,7 +72,7 @@ class CustomTextFilledApp extends StatelessWidget {
 
               decoration: InputDecoration(
                 filled: true,
-                fillColor: typeGender==1?BGroundTextFilledColor:BGroundTextFilledColorMen,
+                fillColor: Colors.white,
 
                 hintStyle: TextStyle(
                     color: typeGender==1?Colors.grey[400]:Colors.white,

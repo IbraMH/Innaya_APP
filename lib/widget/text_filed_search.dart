@@ -14,8 +14,12 @@ class TextFiledSearch extends StatefulWidget {
   String? imageSearch;
   int? widthImageSearch;
   int? heightImageSearch;
+  Color fillColor;
+  String hintText;
+  double borderRadius;
+  Color colorIcon;
 
-      TextFiledSearch({Key? key,required this.searchQuery,this.pressClose,this.onSubmitted,this.focusNode,this.imageSearch = 'assets/images/search.png',this.heightImageSearch = 30,this.widthImageSearch = 30}) : super(key: key);
+      TextFiledSearch({Key? key,this.colorIcon = Colors.black54,this.borderRadius = 10,this.hintText = 'ابحثي عن ...',this.fillColor = Colors.white,required this.searchQuery,this.pressClose,this.onSubmitted,this.focusNode,this.imageSearch = 'assets/images/search.png',this.heightImageSearch = 30,this.widthImageSearch = 30}) : super(key: key);
 
   @override
   State<TextFiledSearch> createState() => _TextFiledSearchState();
@@ -27,7 +31,7 @@ class _TextFiledSearchState extends State<TextFiledSearch> {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderRadius: BorderRadius.all(Radius.circular(widget.borderRadius)),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.2),
@@ -56,14 +60,14 @@ class _TextFiledSearchState extends State<TextFiledSearch> {
         },
         decoration: InputDecoration(
 
-          hintText:'ابحثي عن ...',
+          hintText: widget.hintText,
           filled: true,
-          fillColor: Colors.white,
+          fillColor: widget.fillColor,
 
           prefixIconConstraints: BoxConstraints(minWidth: 23, maxHeight: 20),
           prefixIcon: Padding(
-            padding: const EdgeInsets.only(right: 5, left: 8),
-            child: Image.asset(widget.imageSearch!,width: widget.widthImageSearch!.w,height: widget.heightImageSearch!.h,)//SvgPicture.asset(ICON_SEARCH,color: Colors.white,),
+            padding: const EdgeInsets.only(right: 10, left: 8),
+            child: Image.asset(widget.imageSearch!,width: widget.widthImageSearch!.w,height: widget.heightImageSearch!.h,color: widget.colorIcon,)//SvgPicture.asset(ICON_SEARCH,color: Colors.white,),
           ),
           suffixIconConstraints: BoxConstraints(maxHeight: 20, maxWidth: 35),
           suffixIcon: GestureDetector(
@@ -83,11 +87,11 @@ class _TextFiledSearchState extends State<TextFiledSearch> {
           contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
           border: InputBorder.none,
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: BorderRadius.all(Radius.circular(widget.borderRadius)),
             borderSide: BorderSide.none,
           ),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderRadius: BorderRadius.all(Radius.circular(widget.borderRadius)),
             borderSide: BorderSide.none,
               ),
           disabledBorder:InputBorder.none,

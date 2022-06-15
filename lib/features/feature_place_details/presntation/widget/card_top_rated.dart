@@ -66,21 +66,6 @@ class CardTopRated extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
                 Spacer(),
-                // RatingBar.builder(
-                //   ignoreGestures: true,
-                //   initialRating: 1,
-                //   minRating: 1,
-                //   direction: Axis.horizontal,
-                //   allowHalfRating: true,
-                //   itemCount: 1,
-                //   itemPadding: EdgeInsets.symmetric(horizontal: 0),
-                //   itemSize: 20,
-                //   itemBuilder: (context, _) => Icon(
-                //     Icons.star,
-                //     color: Colors.amber,
-                //   ),
-                //   onRatingUpdate: (rating) {},
-                // ),
                 // SizedBox(width: 5.w),
                 // CustomeText(
                 //   color: Colors.black,
