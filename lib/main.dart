@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:innaya_app/core/push_notification_service.dart';
@@ -11,6 +12,7 @@ import 'package:innaya_app/localization/lang/message.dart';
 import 'package:innaya_app/routes/app_pages.dart';
 
 import 'core/init_app.dart';
+import 'utility/theme.dart';
 
 Future<void> main() async {
 
@@ -51,9 +53,11 @@ class _MainAppState extends State<MainApp> {
         getPages: AppPages.routes,
         initialRoute: AppPages.INITIAL,
         home: SplashScreen(),
-        // theme: theme(),
+        theme: theme(),
         title: 'Offer App',
         translations: Messages(),
+        builder: FlutterSmartDialog.init(),
+
         // your translations
         locale: Locale('ar'),
         fallbackLocale: Locale('ar'),

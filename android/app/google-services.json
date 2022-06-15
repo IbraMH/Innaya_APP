@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1006399957974",
+    "project_id": "innaya-15d34",
+    "storage_bucket": "innaya-15d34.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1006399957974:android:c97d37225dd801afaa1277",
+        "android_client_info": {
+          "package_name": "com.tripleQ.innaya_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1006399957974-02qaodrtjks7dua04q83bk8ginkkjasf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4THQpBNF2_Oean3B5WCXo41pfADGsQGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1006399957974-02qaodrtjks7dua04q83bk8ginkkjasf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

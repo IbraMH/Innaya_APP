@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:innaya_app/core/app_size.dart';
 import 'package:innaya_app/features/feature_home/presntation/widget/card_categories_home.dart';
 import 'package:innaya_app/features/feature_home/presntation/widget/card_closest.dart';
-import 'package:innaya_app/features/feature_my_reservation/presntation/view/my_reservation.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/widget/card_top_rated.dart';
 import 'package:innaya_app/features/feature_home/presntation/widget/categories_data.dart';
 import 'package:innaya_app/features/feature_home/presntation/widget/closest_data.dart';
@@ -17,6 +16,7 @@ import 'package:innaya_app/features/feature_place_details/presntation/widget/top
 import 'package:innaya_app/features/feature_places/presntation/view/places_screen.dart';
 import 'package:innaya_app/localization/lang/message.dart';
 import 'package:innaya_app/widget/custom_app_bar.dart';
+import 'package:innaya_app/utility/shared_method.dart';
 import 'package:innaya_app/widget/custome_text.dart';
 import 'package:innaya_app/widget/navigation_drawer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -173,9 +173,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           children: [
                             PageView.builder(
                               controller: controller,
-                              itemCount: widget.typeGender == 1
-                                  ? listSlider.length
-                                  : listSliderMen1.length,
+                              itemCount: getIt<HomeRepository>().listSliders.length,
                               clipBehavior: Clip.antiAlias,
                               onPageChanged: (index) {
                                 setState(() {
@@ -183,15 +181,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                 });
                               },
                               itemBuilder: (context, index) {
-                                String listImageSlider = widget.typeGender == 1
-                                    ? listSlider.elementAt(index)
-                                    : widget.typeGender == 2 &&
-                                            indexContainer == 1
-                                        ? listSliderMen1.elementAt(index)
-                                        : widget.typeGender == 2 &&
-                                                indexContainer == 2
-                                            ? listSliderMen2.elementAt(index)
-                                            : listSliderMen3.elementAt(index);
+                                String listImageSlider =  getIt<HomeRepository>().listSliders[index].imageUrl!;
                                 return Padding(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 5.w, vertical: 10.h),
@@ -201,13 +191,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15.r),
                                     ),
-                                    child: Image.asset(
-                                      listImageSlider,
-                                      width: double.infinity,
-                                      height: double.infinity,
-                                      fit: BoxFit.cover,
-                                      isAntiAlias: true,
-                                    ),
+                                    child: imageNetwork(imageUrl:listImageSlider ),
                                   ),
                                 );
                               },
@@ -230,9 +214,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                       child: SmoothPageIndicator(
                                           controller: controller!,
                                           // PageController
-                                          count: widget.typeGender == 1
-                                              ? listSlider.length
-                                              : listSliderMen1.length,
+                                          count: getIt<HomeRepository>().listSliders.length,
                                           effect: WormEffect(
                                               dotWidth: 10.0.w,
                                               dotHeight: 10.0.w,
@@ -253,123 +235,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              children: [
-                                ContainerTypeCategories(
-                                  title: widget.typeGender == 1
-                                      ? 'صالون الكوافير'
-                                      : 'صالون',
-                                  bGColor: Colors.white,
-                                  select: indexContainer == 1 ? true : false,
-                                  typeGender: widget.typeGender,
-                                  pressCard: () {
-                                    setState(() {
-                                      if (indexContainer != 1) {
-                                        indexContainer = 1;
-                                        indexImage = null;
-                                        selectedImage = 0;
-                                      }
-                                    });
-                                  },
-                                ),
-                                SizedBox(width: 10.w),
-                                ContainerTypeCategories(
-                                  title: 'عيادات تجميل',
-                                  select: indexContainer == 2 ? true : false,
-                                  typeGender: widget.typeGender,
-                                  pressCard: () {
-                                    setState(() {
-                                      if (indexContainer != 2) {
-                                        indexContainer = 2;
-                                        indexImage = null;
-                                        selectedImage = 0;
-                                      }
-                                    });
-                                  },
-                                ),
-                                SizedBox(width: 10.w),
-                                ContainerTypeCategories(
-                                  title: 'تدليك & ساونا',
-                                  select: indexContainer == 3 ? true : false,
-                                  typeGender: widget.typeGender,
-                                  pressCard: () {
-                                    setState(() {
-                                      if (indexContainer != 3) {
-                                        indexContainer = 3;
-                                        indexImage = null;
-                                        selectedImage = 0;
-                                      }
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                            Container(
-                              height: 120.h,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.3),
-                                    spreadRadius: 2,
-                                    blurRadius: 10,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              padding: EdgeInsetsDirectional.only(top: 15.h,bottom:5.h,),
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount:
-                                    indexContainer == 1 && widget.typeGender == 1
-                                        ? listCategory1.length
-                                        : indexContainer == 1 &&
-                                                widget.typeGender == 2
-                                            ? listCategoryMen1.length
-                                            : indexContainer == 2 &&
-                                                    widget.typeGender == 1
-                                                ? listCategory2.length
-                                                : indexContainer == 2 &&
-                                                        widget.typeGender == 2
-                                                    ? listCategoryMen2.length
-                                                    : listCategory3.length,
-                                itemBuilder: (context, index) {
-                                  CategoriesData listImages =
-                                      indexContainer == 1 &&
-                                              widget.typeGender == 1
-                                          ? listCategory1.elementAt(index)
-                                          : indexContainer == 1 &&
-                                                  widget.typeGender == 2
-                                              ? listCategoryMen1.elementAt(index)
-                                              : indexContainer == 2 &&
-                                                      widget.typeGender == 1
-                                                  ? listCategory2.elementAt(index)
-                                                  : indexContainer == 2 &&
-                                                          widget.typeGender == 2
-                                                      ? listCategoryMen2
-                                                          .elementAt(index)
-                                                      : listCategory3
-                                                          .elementAt(index);
-                                  return CardCategoriesHome(
-                                    image: listImages.image,
-                                    title: listImages.title,
-                                    select: indexImage == index ? true : false,
-                                    typeGender: widget.typeGender,
-                                    pressCard: () {
-                                      setState(() {
-                                        if (indexImage != index) {
-                                          indexImage = index;
-                                        } else {
-                                          indexImage = -1;
-                                        }
-                                      });
-                                    },
-                                  );
-                                },
-                              ),
-                            ),
-                            SizedBox(height: 10.h),
+                            DepartmentListView(listDepartment:getIt<HomeRepository>().listDepartments,),
+                            SizedBox(height: 20.h),
                             ItemRowType(
                               title: HTopRated.tr,
                               typeGender: widget.typeGender,
@@ -379,14 +246,15 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                 ));
                               },
                             ),
+                            SizedBox(height: 5.h),
                             SizedBox(
-                              height: 250.h,
+                              height: 270.h,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: listClosest.length,
                                 itemBuilder: (context, index) {
                                   ClosestData closestData =
-                                      listClosest.elementAt(index);
+                                  listClosest.elementAt(index);
                                   return CardClosest(
                                     title: closestData.title,
                                     subTitle: closestData.subTitle,
@@ -396,7 +264,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                 },
                               ),
                             ),
-                            SizedBox(height: 5.h),
+                            SizedBox(height: 20.h),
                             ItemRowType(
                               title: HClosestToYou.tr,
                               typeGender: widget.typeGender,
@@ -406,6 +274,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                 ));
                               },
                             ),
+                            SizedBox(height: 5.h),
                             SizedBox(
                               height: 270.h,
                               child: ListView.builder(
@@ -413,7 +282,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                 itemCount: listClosest.length,
                                 itemBuilder: (context, index) {
                                   ClosestData closestData =
-                                      listClosest.elementAt(index);
+                                  listClosest.elementAt(index);
                                   return CardClosest(
                                     title: closestData.title,
                                     subTitle: closestData.subTitle,

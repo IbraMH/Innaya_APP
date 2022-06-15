@@ -22,6 +22,7 @@ class Utility {
   static String TypeDevice = "";
   static BuildContext? context;
   static File? fileVideo;
+  static int typeGender=1;
 
   static playSound(String pathSound) {
 /*    AssetsAudioPlayer.newPlayer().open(

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:innaya_app/core/app_colors.dart';
+import 'package:innaya_app/utility/utility.dart';
 import 'package:innaya_app/widget/custome_text.dart';
 
 class ContainerTypeCategories extends StatelessWidget {
@@ -31,7 +32,7 @@ class ContainerTypeCategories extends StatelessWidget {
         child: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: select?bGColor:typeGender==1?BGroundCategoryHomePage:BGroundCategoryHomePageMen,
+            color: select?bGColor:Utility.typeGender==1?BGroundCategoryHomePage:BGroundCategoryHomePageMen,
             borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(10.r),topStart: Radius.circular(10.r)),
             boxShadow: [
               BoxShadow(

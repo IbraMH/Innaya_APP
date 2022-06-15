@@ -5,10 +5,12 @@ import 'package:innaya_app/core/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:innaya_app/core/app_size.dart';
 import 'package:innaya_app/features/feature_auth/presntation/view/view_login.dart';
+import 'package:innaya_app/features/feature_home/controller/home_controller.dart';
 import 'package:innaya_app/features/feature_splash/presntation/widget/item_card.dart';
 import 'package:innaya_app/features/feature_splash/presntation/widget/item_image_splash.dart';
 import 'package:innaya_app/features/feature_start/presntation/view/start_page.dart';
 import 'package:innaya_app/utility/size_config.dart';
+import 'package:innaya_app/utility/utility.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -18,8 +20,17 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
+  HomeController ?homeController;
   int typeGender = 1;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    homeController=Get.put(HomeController());
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -79,12 +90,9 @@ class _SplashScreenState extends State<SplashScreen> {
               topPositioned: 520.h,
               rightPositioned: 45.w,
               // imageColor: titleStartPage,
-              pressCard: (){
-                setState(() {
-                  typeGender = 1;
-                });
-                Get.to(() => ViewLogin(typeGender: typeGender,),
-                    transition: Transition.rightToLeftWithFade);
+              pressCard: () async {
+                goToHome(2);
+
               },
             ),
             ItemImageSplash(image: 'assets/images/logo_men.png',bottomPositioned: 60.h,leftPositioned: 30.w,widthImage: 180.w,),
@@ -92,18 +100,24 @@ class _SplashScreenState extends State<SplashScreen> {
               image: 'assets/images/next.png',
               bottomPositioned: 40.h,
               leftPositioned: 150.w,
-              pressCard: (){
-                setState(() {
-                  typeGender = 2;
-                });
-                Get.to(() => ViewLogin(typeGender: typeGender,),
-                    transition: Transition.rightToLeftWithFade);
+              pressCard: () async {
+                goToHome(1);
               },
             ),
           ],
         ),
       ),
     );
+  }
+  goToHome(int typeGender) async {
+    homeController!.showDiloge();
+    Utility.typeGender=typeGender;
+    await homeController!.getSlider();
+    await homeController!.getDepartments();
+    homeController!.hideDiloge();
+
+    Get.to(() => ViewLogin(typeGender: typeGender,),
+    transition: Transition.rightToLeftWithFade);
   }
 }
 

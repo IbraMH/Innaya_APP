@@ -72,6 +72,8 @@ const String kLocationStore = "kLocation";
 const String kPhoneNumber = "kPhoneNumber";
 const String kStoreCover = "Store Cover";
 const String kAnswe = "kAnswer";
+const String kGender = "kGender";
+
 const String kConfirmPassword = "kConfirmPassword";
 const String kMatchPassError = "Passwords aren't match";
 const String kChooseQuestion = "Choose a question";
