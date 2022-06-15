@@ -6,6 +6,6 @@ class CategoriesDataPlace {
   CategoriesDataPlace({
     required this.title,
     required this.image,
-    required this.numberProduct,
+     this.numberProduct=1,
   });
 }

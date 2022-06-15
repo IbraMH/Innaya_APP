@@ -35,7 +35,7 @@ class CustomAppBar extends StatelessWidget {
           Spacer(),
           GestureDetector(
             onTap: (){
-              Get.offAll(HomeScreen(typeGender: typeGender));
+              Get.offAll(HomePageScreen(typeGender: typeGender));
             },
             child: Image.asset(
               typeGender == 1

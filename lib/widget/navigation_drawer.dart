@@ -158,7 +158,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                                  transition: Transition.rightToLeftWithFade);*/
                           Get.offAll(
                                   () =>
-                                  HomeScreen(typeGender: widget.typeGender),
+                                      HomePageScreen(typeGender: widget.typeGender),
                               transition: Transition.rightToLeftWithFade);
                           break;
                         }
