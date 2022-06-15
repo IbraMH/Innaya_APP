@@ -6,6 +6,8 @@ import 'package:innaya_app/core/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:innaya_app/core/app_size.dart';
 import 'package:innaya_app/core/init_app.dart';
+import 'package:innaya_app/features/feature_home/controller/home_controller.dart';
+import 'package:innaya_app/features/feature_home/data/model/department.dart';
 import 'package:innaya_app/features/feature_home/data/repositories/home_repository.dart';
 import 'package:innaya_app/features/feature_home/presntation/widget/card_categories_home.dart';
 import 'package:innaya_app/features/feature_home/presntation/widget/card_closest.dart';
@@ -17,7 +19,9 @@ import 'package:innaya_app/features/feature_home/presntation/widget/container_ty
 import 'package:innaya_app/features/feature_home/presntation/widget/item_row_type.dart';
 import 'package:innaya_app/features/feature_place_details/presntation/widget/top_rated_data.dart';
 import 'package:innaya_app/features/feature_places/presntation/view/places_screen.dart';
+import 'package:innaya_app/features/widget/RoundButtomLoading.dart';
 import 'package:innaya_app/localization/lang/message.dart';
+import 'package:innaya_app/utility/utility.dart';
 import 'package:innaya_app/widget/custom_app_bar.dart';
 import 'package:innaya_app/utility/shared_method.dart';
 import 'package:innaya_app/widget/custome_text.dart';
@@ -136,10 +140,17 @@ class _HomePageScreenState extends State<HomePageScreen> {
   ];
 
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-
+  HomeController? homeController;
   @override
   void initState() {
     // TODO: implement initState
+    if(Utility.typeGender==2){
+      widget.typeGender=1;
+    }else{
+      widget.typeGender=2;
+
+    }
+    homeController=Get.put(HomeController());
     super.initState();
     controller = PageController();
   }
@@ -154,154 +165,188 @@ class _HomePageScreenState extends State<HomePageScreen> {
         drawer: NavigationDrawer(typeGender: widget.typeGender),
         body: SingleChildScrollView(
 
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Stack(
             children: [
-              CustomAppBar(
-                typeGender: widget.typeGender,
-                pressCard: (){
-                  Get.back();
-                },
-                pressMenu: () => _key.currentState!.openDrawer(),
-              ),
-              SizedBox(
-                height: SCREEN_HIGHT * 0.8,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 250.h,
-                        width: double.infinity,
-                        child: Stack(
-                          children: [
-                            PageView.builder(
-                              controller: controller,
-                              itemCount: getIt<HomeRepository>().listSliders.length,
-                              clipBehavior: Clip.antiAlias,
-                              onPageChanged: (index) {
-                                setState(() {
-                                  selectedImage = index;
-                                });
-                              },
-                              itemBuilder: (context, index) {
-                                String listImageSlider =  getIt<HomeRepository>().listSliders[index].imageUrl!;
-                                return Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 5.w, vertical: 10.h),
-                                  child: Card(
-                                    elevation: 5,
-                                    clipBehavior: Clip.antiAlias,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.r),
-                                    ),
-                                    child: imageNetwork(imageUrl:listImageSlider ),
-                                  ),
-                                );
-                              },
-                            ),
-                            Positioned(
-                              bottom: 15.h,
-                              right: 0,
-                              left: 0,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Card(
-                                    color: Colors.white.withOpacity(0.4),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30.r),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 10.w, vertical: 10.h),
-                                      child: SmoothPageIndicator(
-                                          controller: controller!,
-                                          // PageController
-                                          count: getIt<HomeRepository>().listSliders.length,
-                                          effect: WormEffect(
-                                              dotWidth: 10.0.w,
-                                              dotHeight: 10.0.w,
-                                              activeDotColor: Colors.blue),
-                                          // your preferred effect
-                                          onDotClicked: (_currentLocation) {}),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      // SizedBox(height: 15.h),
-                      Padding(
-                        padding: EdgeInsetsDirectional.only(start: 10.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            DepartmentListView(listDepartment:getIt<HomeRepository>().listDepartments,),
-                            SizedBox(height: 20.h),
-                            ItemRowType(
-                              title: HTopRated.tr,
-                              typeGender: widget.typeGender,
-                              pressCard: () {
-                                Get.to(PlacesScreen(
-                                  typeGender: widget.typeGender,
-                                ));
-                              },
-                            ),
-                            SizedBox(height: 5.h),
-                            SizedBox(
-                              height: 270.h,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: listClosest.length,
-                                itemBuilder: (context, index) {
-                                  ClosestData closestData =
-                                  listClosest.elementAt(index);
-                                  return CardClosest(
-                                    title: closestData.title,
-                                    subTitle: closestData.subTitle,
-                                    image: closestData.image,
-                                    length: closestData.length.toString(),
-                                  );
-                                },
-                              ),
-                            ),
-                            SizedBox(height: 20.h),
-                            ItemRowType(
-                              title: HClosestToYou.tr,
-                              typeGender: widget.typeGender,
-                              pressCard: () {
-                                Get.to(PlacesScreen(
-                                  typeGender: widget.typeGender,
-                                ));
-                              },
-                            ),
-                            SizedBox(height: 5.h),
-                            SizedBox(
-                              height: 270.h,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: listClosest.length,
-                                itemBuilder: (context, index) {
-                                  ClosestData closestData =
-                                  listClosest.elementAt(index);
-                                  return CardClosest(
-                                    title: closestData.title,
-                                    subTitle: closestData.subTitle,
-                                    image: closestData.image,
-                                    length: closestData.length.toString(),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 25.h),
-                    ],
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomAppBar(
+                    typeGender: widget.typeGender,
+                    pressCard: (){
+                      Get.back();
+                    },
+                    pressMenu: () => _key.currentState!.openDrawer(),
                   ),
+                  SizedBox(
+                    height: SCREEN_HIGHT * 0.8,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 250.h,
+                            width: double.infinity,
+                            child: Stack(
+                              children: [
+                                PageView.builder(
+                                  controller: controller,
+                                  itemCount: getIt<HomeRepository>().listSliders.length,
+                                  clipBehavior: Clip.antiAlias,
+                                  onPageChanged: (index) {
+                                    setState(() {
+                                      selectedImage = index;
+                                    });
+                                  },
+                                  itemBuilder: (context, index) {
+                                    String listImageSlider =  getIt<HomeRepository>().listSliders[index].imageUrl!;
+                                    return Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 5.w, vertical: 10.h),
+                                      child: Card(
+                                        elevation: 5,
+                                        clipBehavior: Clip.antiAlias,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(15.r),
+                                        ),
+                                        child: imageNetwork(imageUrl:listImageSlider ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                Positioned(
+                                  bottom: 15.h,
+                                  right: 0,
+                                  left: 0,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Card(
+                                        color: Colors.white.withOpacity(0.4),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(30.r),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10.w, vertical: 10.h),
+                                          child: SmoothPageIndicator(
+                                              controller: controller!,
+                                              // PageController
+                                              count: getIt<HomeRepository>().listSliders.length,
+                                              effect: WormEffect(
+                                                  dotWidth: 10.0.w,
+                                                  dotHeight: 10.0.w,
+                                                  activeDotColor: Colors.blue),
+                                              // your preferred effect
+                                              onDotClicked: (_currentLocation) {}),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // SizedBox(height: 15.h),
+                          Padding(
+                            padding: EdgeInsetsDirectional.only(start: 10.w),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                DepartmentListView(listDepartment:getIt<HomeRepository>().listDepartments,),
+                                SizedBox(height: 20.h),
+                                ItemRowType(
+                                  title: HTopRated.tr,
+                                  typeGender: widget.typeGender,
+                                  pressCard: () {
+                                    Get.to(PlacesScreen(
+                                      typeGender: widget.typeGender,
+                                    ));
+                                  },
+                                ),
+                                SizedBox(height: 5.h),
+                                SizedBox(
+                                  height: 270.h,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: listClosest.length,
+                                    itemBuilder: (context, index) {
+                                      ClosestData closestData =
+                                      listClosest.elementAt(index);
+                                      return CardClosest(
+                                        title: closestData.title,
+                                        subTitle: closestData.subTitle,
+                                        image: closestData.image,
+                                        length: closestData.length.toString(),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                SizedBox(height: 20.h),
+                                ItemRowType(
+                                  title: HClosestToYou.tr,
+                                  typeGender: widget.typeGender,
+                                  pressCard: () {
+                                    Get.to(PlacesScreen(
+                                      typeGender: widget.typeGender,
+                                    ));
+                                  },
+                                ),
+                                SizedBox(height: 5.h),
+                                SizedBox(
+                                  height: 270.h,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: listClosest.length,
+                                    itemBuilder: (context, index) {
+                                      ClosestData closestData =
+                                      listClosest.elementAt(index);
+                                      return CardClosest(
+                                        title: closestData.title,
+                                        subTitle: closestData.subTitle,
+                                        image: closestData.image,
+                                        length: closestData.length.toString(),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 25.h),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Positioned(
+                bottom: 80.h,
+                right: 0,
+                left: 0,
+                child:Obx(() {
+                  return !homeController!.isVisible.value?SizedBox():Container(
+                    height:45.h,
+                    width:45.w,
+                    margin: EdgeInsets.only(left: 115.w,right: 115.w),
+
+                    child: SizedBox(
+                      width:45.w,
+                      child: RoundButtomLoading(
+                          title: "فلتر",
+                          state: homeController!.state.value,
+                          press: () {
+                            /*     Get.to(() => HomePageScreen(),
+                                                          transition: Transition.rightToLeftWithFade);*/
+                            if (homeController!.state.value == 1) {
+                              filterPlace();
+                            }
+                          }),
+                    ),
+                  );
+                }
                 ),
+
+
+
               ),
             ],
           ),
@@ -309,4 +354,27 @@ class _HomePageScreenState extends State<HomePageScreen> {
       ),
     );
   }
+
+
+filterPlace() {
+  List<int>list = [];
+  for (int i = 0; i <
+      getIt<HomeRepository>().listDepartments[homeController!.departmentSelect
+          .value].departmentService!.length; i++) {
+    DepartmentService departmentService = getIt<HomeRepository>()
+        .listDepartments[homeController!.departmentSelect.value]
+        .departmentService![i];
+
+    if (departmentService.service!.isSelect) {
+      list.add(departmentService.service!.id!);
+    }
+  }
+
+  var  bodyData = {
+    "department_id": "${getIt<HomeRepository>().listDepartments[homeController!.departmentSelect
+        .value].id!}",
+    "services_id":list,
+  };
+  homeController!.getFillter(bodyData);
+}
 }

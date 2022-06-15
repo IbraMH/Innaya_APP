@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:innaya_app/core/app_size.dart';
 import 'package:innaya_app/features/feature_home/data/model/department.dart';
 import 'package:innaya_app/features/feature_home/presntation/widget/card_categories_home.dart';
+import 'package:innaya_app/utility/utility.dart';
 
 import 'container_type_categories.dart';
 
@@ -23,7 +24,7 @@ class ItemDepartment extends StatelessWidget {
       title: department.name!,
       bGColor: Colors.white,
       select: department!.isSelect,
-      typeGender:1,
+      typeGender:Utility.typeGender==1?2:1,
       pressCard:press,
 
     );
@@ -37,7 +38,7 @@ class ItemDepartment extends StatelessWidget {
         image: departmentService.service!.imageUrl!,
         title:  departmentService.service!.name!,
         select: departmentService.service!.isSelect,
-        typeGender: 1,
+        typeGender:Utility.typeGender==1?2:1,
         pressCard:pressSub,
       );;
     });

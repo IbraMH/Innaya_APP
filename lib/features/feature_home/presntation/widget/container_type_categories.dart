@@ -32,7 +32,7 @@ class ContainerTypeCategories extends StatelessWidget {
         child: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: select?bGColor:Utility.typeGender==1?BGroundCategoryHomePage:BGroundCategoryHomePageMen,
+            color: select?bGColor:typeGender==1?BGroundCategoryHomePage:BGroundCategoryHomePageMen,
             borderRadius: BorderRadiusDirectional.only(topEnd: Radius.circular(10.r),topStart: Radius.circular(10.r)),
             boxShadow: [
               BoxShadow(

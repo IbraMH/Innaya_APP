@@ -33,12 +33,12 @@ class CardCategoriesHome extends StatelessWidget {
             children: [
               Card(
                 elevation: 0,
-                color: select&&Utility.typeGender==1?titleStartPage:select&&Utility.typeGender==2?titleStartPage2:Colors.transparent,
+                color: select&&typeGender==1?titleStartPage:select&&typeGender==2?titleStartPage2:Colors.transparent,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(40.r),
                   side: BorderSide(
                     width: 2,
-                    color: Utility.typeGender==1?titleStartPage:titleStartPage2,
+                    color: typeGender==1?titleStartPage:titleStartPage2,
                   ),
                 ),
                 child: Padding(
@@ -47,13 +47,13 @@ class CardCategoriesHome extends StatelessWidget {
                     image,
                     width: 35.w,
                     height: 35.h,
-                    color: select?Colors.white:Utility.typeGender==1?titleStartPage:titleStartPage2,
+                    color: select?Colors.white:typeGender==1?titleStartPage:titleStartPage2,
                   ),
                 ),
               ),
               CustomeText(
                 title: title,
-                color:Utility.typeGender==1?titleStartPage:titleStartPage2,
+                color:typeGender==1?titleStartPage:titleStartPage2,
                 fontSize: 14.sp,
               ),
             ],

@@ -57,7 +57,7 @@ class _ItemSubDepartmentState extends State<ItemSubDepartment> {
             image: item.service!.imageUrl!,
             title: item.service!.name!,
             select: item.service!.isSelect,
-            typeGender: Utility.typeGender,
+            typeGender: Utility.typeGender==2?1:2,
             pressCard: () async {
 
               setState(() {
